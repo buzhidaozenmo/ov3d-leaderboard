@@ -329,7 +329,7 @@
     var ovCount = (groups.open_vocab || []).filter(function (item) {
       return resultOf(item, key);
     }).length;
-    $("table-caption").textContent = bench.label + " · 开放词汇 mIoU";
+    $("table-caption").textContent = bench.label + " · " + bench.classes + " 类 · 开放词汇 mIoU";
     $("table-sub").textContent = ovCount + " 个开放词汇结果 · " + DATA.counts.papers +
       " 条记录 / " + (DATA.counts.unique_papers || DATA.counts.papers) +
       " 篇论文 · 最近核实 " + (DATA.data_updated_at || "—");
