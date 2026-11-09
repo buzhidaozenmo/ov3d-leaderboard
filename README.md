@@ -142,6 +142,19 @@ git add data && git commit -m "data: add MethodName" && git push
 | `.github/workflows/daily.yml` | 每日抓取、重建、提交、部署、Issue 提醒 |
 | `docs/数据核实规范.md` | 收录标准与出处记录规范 |
 
+## 网络排障（仅本地开发）
+
+如果本机访问 `github.com` 超时、但 `api.github.com` 正常（部分网络会这样），GitHub Actions 不受影响，
+本地 `git pull/push` 可以走仓库自带的本地代理：
+
+```bash
+bash scripts/local_git.sh pull --rebase
+bash scripts/local_git.sh push
+```
+
+该脚本会按需启动 `scripts/github_proxy.py`（把 `github.com` 的 CONNECT 请求转发到可用的 GitHub IP）。
+只在本地开发时使用，部署与抓取都在 GitHub Actions 中完成。
+
 ## 免责声明
 
 - 论文与代码版权归原作者；本仓库只做研究索引。
