@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://buzhidaozenmo.github.io/ov3d-leaderboard/sitemap.xml

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>开放词汇点云语义分割榜单 · OV-3D Leaderboard</title>
+  <meta name="description" content="ScanNet v2、nuScenes、Matterport3D 三个数据集上的开放词汇点云语义分割 mIoU 榜单，标注论文、会议/期刊、年份、开源状态与评测口径，每日自动检查更新。">
+  <meta name="color-scheme" content="light">
+  <meta property="og:title" content="开放词汇点云语义分割榜单">
+  <meta property="og:description" content="ScanNet v2 / nuScenes / Matterport3D 的 open-vocabulary 3D 语义分割 mIoU，含论文、venue、开源状态与口径。">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">跳到正文</a>
+
+  <header class="masthead wrap">
+    <div class="kicker">
+      <span>OPEN-VOCABULARY / 3D SEMANTIC SEGMENTATION</span>
+      <span>BENCHMARK · <span id="kicker-year">2026</span></span>
+    </div>
+    <div class="masthead-grid">
+      <h1>开放词汇点云<br>语义分割榜单</h1>
+      <p class="lede">
+        ScanNet v2、nuScenes、Matterport3D 上的 open-vocabulary / zero-shot mIoU。
+        每一行都写明论文、发表年份与刊物、开源状态、mIoU 与评测口径。
+      </p>
+    </div>
+    <dl class="stats" aria-label="数据概览">
+      <div>
+        <dt>收录论文</dt>
+        <dd><span id="stat-papers">—</span><small>篇</small></dd>
+      </div>
+      <div>
+        <dt>最近抓取</dt>
+        <dd id="stat-check" class="stat-date">—</dd>
+      </div>
+      <div>
+        <dt>待核实</dt>
+        <dd><span id="stat-pending">—</span><small>条</small></dd>
+      </div>
+      <div>
+        <dt>数据更新</dt>
+        <dd id="stat-updated" class="stat-date">—</dd>
+      </div>
+    </dl>
+  </header>
+
+  <nav class="tabs wrap" aria-label="数据集">
+    <div class="tablist" role="tablist" aria-label="选择数据集">
+      <button class="tab" role="tab" data-dataset="scannet_v2" aria-selected="true">
+        ScanNet v2 <sup>20 类</sup>
+      </button>
+      <button class="tab" role="tab" data-dataset="nuscenes" aria-selected="false">
+        nuScenes <sup>16 类</sup>
+      </button>
+      <button class="tab" role="tab" data-dataset="matterport3d" aria-selected="false">
+        Matterport3D <sup>21 类</sup>
+      </button>
+    </div>
+    <div class="viewswitch" role="group" aria-label="视图">
+      <button class="ghost" data-view="table" aria-pressed="true">排名表</button>
+      <button class="ghost" data-view="matrix" aria-pressed="false">三表对照</button>
+    </div>
+  </nav>
+
+  <main id="main" class="wrap">
+    <section id="view-table" aria-labelledby="table-caption">
+      <div class="toolbar">
+        <label class="search">
+          <span class="sr">搜索方法或论文</span>
+          <input id="search" type="search" placeholder="搜索方法 / 论文 / venue" autocomplete="off">
+        </label>
+        <label class="check"><input id="only-open" type="checkbox"> 只看开源</label>
+        <label class="check"><input id="only-3d" type="checkbox"> 严格口径（3D-only）</label>
+        <label class="select">
+          <span class="sr">排序</span>
+          <select id="sort">
+            <option value="miou">按 mIoU 降序</option>
+            <option value="year">按年份降序</option>
+            <option value="name">按方法名</option>
+          </select>
+        </label>
+        <p class="toolbar-note">开放词汇方法参与排名；全监督与少量标签仅作参考。</p>
+      </div>
+
+      <div class="caption-row">
+        <h2 id="table-caption">—</h2>
+        <p id="table-sub">—</p>
+      </div>
+
+      <div class="tablewrap">
+        <table class="board" id="board">
+          <thead>
+            <tr>
+              <th scope="col" class="c-rank">名次</th>
+              <th scope="col">方法</th>
+              <th scope="col" class="c-venue">发表</th>
+              <th scope="col" class="c-miou">mIoU</th>
+              <th scope="col" class="c-macc">mAcc</th>
+              <th scope="col" class="c-proto">口径</th>
+              <th scope="col" class="c-code">开源</th>
+              <th scope="col" class="c-more"><span class="sr">详情</span></th>
+            </tr>
+          </thead>
+          <tbody id="board-body"></tbody>
+        </table>
+        <p class="empty" id="empty" hidden>没有符合当前筛选的结果。</p>
+      </div>
+
+      <p class="caveat">
+        数字为论文报告值，未重新评测。不同论文的文本编码器、2D-3D 集成方式与训练预算不同，
+        跨口径比较并不严格；请结合「口径」列与详情中的出处阅读。
+      </p>
+    </section>
+
+    <section id="view-matrix" hidden aria-labelledby="matrix-caption">
+      <div class="caption-row">
+        <h2 id="matrix-caption">三表对照</h2>
+        <p id="matrix-sub">按 ScanNet v2 排序；各列最高值以红色下划线标出。</p>
+      </div>
+      <div class="tablewrap">
+        <table class="board matrix" id="matrix-board">
+          <thead>
+            <tr>
+              <th scope="col">方法</th>
+              <th scope="col" class="c-venue">发表</th>
+              <th scope="col" class="c-miou">ScanNet v2</th>
+              <th scope="col" class="c-miou">nuScenes</th>
+              <th scope="col" class="c-miou">Matterport3D</th>
+              <th scope="col" class="c-code">开源</th>
+            </tr>
+          </thead>
+          <tbody id="matrix-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <aside class="pending wrap" aria-labelledby="pending-title">
+    <div class="pending-head">
+      <h2 id="pending-title">本期待审</h2>
+      <p id="pending-note">每日自动抓取的新论文先进入待审队列，核实数字后才会入榜。</p>
+    </div>
+    <ul id="pending-list" class="pending-list"></ul>
+  </aside>
+
+  <section class="method wrap" aria-labelledby="method-title">
+    <h2 id="method-title">方法说明</h2>
+    <div class="method-grid">
+      <div>
+        <h3>收录标准</h3>
+        <p>面向文本查询的开放词汇 / zero-shot 3D 语义分割方法；在 ScanNet v2、nuScenes 或 Matterport3D 上报告全类 mIoU。类别集合、划分或任务不一致的结果不混入排名。</p>
+      </div>
+      <div>
+        <h3>排名口径</h3>
+        <p>只对已核实（verified）的开放词汇行排名，按 mIoU 降序，并列同名次。全监督与少量标签方法同表列出、以横线分隔，不占开放词汇名次。</p>
+      </div>
+      <div>
+        <h3>数字来源</h3>
+        <p>优先取原论文表格并记录表号/页码；原论文未报告时转引他文对照表，标「转引自」。同一方法的不同变体拆行，不取平均。</p>
+      </div>
+      <div>
+        <h3>更新方式</h3>
+        <p>GitHub Actions 每日 09:00（北京时间）抓取 arXiv / Semantic Scholar / GitHub；新论文进入待审队列，由维护者核对原文后写入榜单并重新部署。</p>
+      </div>
+    </div>
+    <p class="cite">引用格式：OV-3D Leaderboard, <span id="cite-url">buzhidaozenmo.github.io/ov3d-leaderboard</span>，访问日期 <span id="cite-date">—</span>。</p>
+  </section>
+
+  <footer class="footer wrap">
+    <div class="footer-grid">
+      <div>
+        <p class="foot-label">DATA</p>
+        <p>只收录公开论文报告值；论文与代码版权归原作者。代码 MIT，数据用于研究索引，引用请以原论文为准。</p>
+      </div>
+      <div>
+        <p class="foot-label">LINKS</p>
+        <p><a href="https://github.com/buzhidaozenmo/ov3d-leaderboard">GitHub 仓库</a><br>
+           <a href="https://buzhidaozenmo.github.io/Open-Vocabulary-Segmentation-Atlas/">相关项目：Open-Vocabulary Segmentation Atlas</a></p>
+      </div>
+      <div>
+        <p class="foot-label">STATUS</p>
+        <p>最近生成 <span id="foot-generated">—</span><br>
+           最近抓取 <span id="foot-checked">—</span><br>
+           <span id="foot-error" class="foot-error" hidden></span></p>
+      </div>
+    </div>
+    <p class="colophon">SET IN HELVETICA NEUE · SWISS INTERNATIONAL STYLE · <span id="foot-year">2026</span></p>
+  </footer>
+
+  <script src="data/leaderboard.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

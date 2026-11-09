@@ -1,0 +1,12 @@
+# macOS / exFAT
+.DS_Store
+._*
+# build artifacts
+_site/
+__pycache__/
+*.pyc
+# local logs
+logs/*
+!logs/.gitkeep
+# local preview
+.codex_tmp/

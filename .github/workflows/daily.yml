@@ -1,0 +1,97 @@
+name: Daily harvest
+
+on:
+  schedule:
+    # 01:00 UTC = 09:00 Asia/Shanghai. GitHub may delay scheduled runs a few minutes.
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  issues: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  harvest:
+    name: Discover papers and rebuild
+    runs-on: ubuntu-latest
+    outputs:
+      new_count: ${{ steps.summary.outputs.new_count }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Harvest arXiv
+        run: python scripts/harvest.py --summary-json /tmp/summary.json
+      - name: Build site
+        run: python scripts/build.py
+      - name: Commit data changes
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore: daily harvest $(date -u +%F)"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Export run summary
+        id: summary
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          data = json.load(open("/tmp/summary.json", encoding="utf-8"))
+          print("new_count=%d" % data["new"])
+          print("titles<<EOF")
+          for title in data["titles"][:30]:
+              print("- " + title)
+          print("EOF")
+          PY
+      - name: Open or update review issue
+        if: steps.summary.outputs.new_count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json
+          data = json.load(open("/tmp/summary.json", encoding="utf-8"))
+          lines = ["本日 arXiv 抓取发现 **%d** 条新候选，核实数字后才会进入榜单。\n" % data["new"]]
+          for title in data["titles"][:30]:
+              lines.append("- [ ] " + title)
+          lines.append("")
+          lines.append("处理：运行 `python3 scripts/review_queue.py` 查看链接，按 `docs/数据核实规范.md` 核对论文表格，写入 `data/papers.json`，再运行 `python3 scripts/build.py` 并提交。")
+          open("/tmp/issue.md", "w", encoding="utf-8").write("\n".join(lines))
+          PY
+          existing=$(gh issue list --state open --search "待核实候选 in:title" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file /tmp/issue.md
+          else
+            gh issue create --title "待核实候选：开放词汇 3D 分割新论文" --body-file /tmp/issue.md
+          fi
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy Pages
+    needs: harvest
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
