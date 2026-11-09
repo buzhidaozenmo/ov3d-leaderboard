@@ -424,6 +424,27 @@
     });
   }
 
+  function renderChangelog() {
+    var list = $("changelog-list");
+    if (!list) return;
+    clear(list);
+    var entries = DATA.changelog || [];
+    if (!entries.length) {
+      var empty = el("li", "log-empty", "暂无更新记录。");
+      list.appendChild(empty);
+      return;
+    }
+    entries.forEach(function (entry) {
+      var li = el("li");
+      li.appendChild(el("span", "log-date", entry.at || "—"));
+      var body = el("span", "log-body");
+      body.appendChild(el("strong", "", entry.summary || ""));
+      if (entry.kind) body.appendChild(el("span", "log-kind", entry.kind));
+      li.appendChild(body);
+      list.appendChild(li);
+    });
+  }
+
   function renderStats() {
     $("stat-papers").textContent = DATA.counts.unique_papers || DATA.counts.papers;
     $("stat-pending").textContent = DATA.counts.pending;
@@ -544,6 +565,7 @@
     renderTable();
     renderMatrix();
     renderPending();
+    renderChangelog();
     applyHash();
   }
 
