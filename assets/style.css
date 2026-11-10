@@ -335,6 +335,7 @@ h1 {
 
 .ghost {
   appearance: none;
+  text-decoration: none;
   background: none;
   border: 1px solid var(--rule);
   padding: 7px 10px;
