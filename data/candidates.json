@@ -1,1 +1,61 @@
-[]
+[
+  {
+    "id": "2611.10821",
+    "tracks": [
+      "ov"
+    ],
+    "arxiv_id": "2611.10821",
+    "title": "AmodalBox: Automated 3D Bounding Box Annotation under Partial Visibility",
+    "authors": [
+      "In-Jae Lee",
+      "Namtae Kim",
+      "Robert Exley",
+      "Kwonyoung Ryu",
+      "Jaesik Park"
+    ],
+    "published": "2026-11-07",
+    "url": "https://arxiv.org/abs/2611.10821",
+    "venue_hint": "",
+    "matched_keywords": [
+      "nuscenes",
+      "open-vocab",
+      "open-vocabulary"
+    ],
+    "score": 9,
+    "found_at": "2026-11-10 15:59",
+    "status": "pending",
+    "source": "arxiv",
+    "abstract_snippet": "Recent progress in vision foundation models (VFMs) has made automated open-vocabulary 3D bounding box annotation increasingly feasible by jointly leveraging LiDAR point clouds and images. However, partial observations remain a major challenge in sparse driving scenes, where visible LiDAR points often cover only a small"
+  },
+  {
+    "id": "2611.10379",
+    "tracks": [
+      "ov",
+      "multi_view"
+    ],
+    "arxiv_id": "2611.10379",
+    "title": "RefineSplat: Reconstruction-Guided Object-Centric Gaussian Splatting for Open-Vocabulary Querying",
+    "authors": [
+      "Yiren Lu",
+      "Disheng Liu",
+      "Sreya Srinidhi",
+      "Yunlai Zhou",
+      "Yiran Qiao",
+      "Chaoda Song",
+      "Tuo Liang",
+      "Jing Ma"
+    ],
+    "published": "2026-11-07",
+    "url": "https://arxiv.org/abs/2611.10379",
+    "venue_hint": "",
+    "matched_keywords": [
+      "open-vocab",
+      "open-vocabulary"
+    ],
+    "score": 8,
+    "found_at": "2026-11-10 15:59",
+    "status": "pending",
+    "source": "arxiv",
+    "abstract_snippet": "Open-vocabulary 3D scene understanding aims to segment and retrieve arbitrary objects in 3D scenes using natural language queries. Most existing methods typically follow a splat-then-segment paradigm, where 3D Gaussian Splatting is first reconstructed and then augmented with labels or language features for subsequent s"
+  }
+]
