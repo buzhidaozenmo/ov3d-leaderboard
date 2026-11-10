@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>多视角 2D→3D 点云分割榜单 · Projection & Fusion</title>
-  <meta name="description" content="多视角 2D 特征/分割经过像素-点对应、可见性与融合，投影到 3D 点云的开放词汇语义分割榜单：ScanNet v2、nuScenes、Matterport3D 的最终 mIoU，标注 2D 教师、对应/融合方式、3D 阶段与开源状态。">
+  <title>多视角 2D→3D 榜单 · 语义 mIoU / 实例 AP</title>
+  <meta name="description" content="多视角 2D 对应与融合、投影到 3D 的开放词汇榜单：语义分割 mIoU（ScanNet v2/nuScenes/Matterport3D）与零样本 3D 实例分割 AP（ScanNet200/ScanNet++/Replica 等），标注 2D 教师或掩码、视图一致性/融合、3D 阶段与开源状态。">
   <meta name="color-scheme" content="light">
   <meta property="og:title" content="多视角 2D→3D 点云分割榜单">
   <meta property="og:description" content="多视角 2D 对应、融合与投影到 3D 点云的开放词汇方法，按 ScanNet v2 / nuScenes / Matterport3D 的最终 mIoU 排名。">
@@ -29,8 +29,8 @@
     <div class="masthead-grid">
       <h1>多视角 2D→3D<br>对应、融合与投影</h1>
       <p class="lede">
-        多视角 2D 分割/特征，经像素-点对应、可见性与融合，落到 3D 点云上的开放词汇方法。
-        只排每个配置的最终 mIoU，并注明 2D 教师、对应/融合方式与 3D 阶段。
+        多视角 2D 分割/特征，经像素-点对应、视图一致性与融合，落到 3D 点云上的开放词汇方法。
+        语义分割看 mIoU，实例分割看 AP；每条注明 2D 教师/掩码、对应/融合方式与 3D 阶段。
       </p>
     </div>
     <dl class="stats" aria-label="数据概览">
@@ -105,7 +105,11 @@
   </nav>
 
   <main id="main" class="wrap">
-    <section aria-labelledby="table-caption">
+    <section id="semantic" aria-labelledby="table-caption">
+      <div class="sectionbreak">
+        <span>01 / 语义分割</span>
+        <p>开放词汇语义分割：多视角 2D 特征/分割经像素-点对应、融合与 3D 蒸馏/集成，指标为 mIoU。</p>
+      </div>
       <div class="toolbar">
         <label class="search">
           <span class="sr">搜索方法或论文</span>
@@ -163,18 +167,80 @@
         不在本页单列。跨论文的 2D 教师、可见性阈值与类别映射不同，比较时请结合「对应 / 融合」列与详情出处。
       </p>
     </section>
+
+    <section id="instance" aria-labelledby="instance-caption">
+      <div class="sectionbreak">
+        <span>02 / 实例分割</span>
+        <p>零样本 / 开放词汇 3D 实例分割：多视角 2D mask 经视图一致性、跟踪或融合，提升为 3D 实例。指标为 AP，AP50 / AP25 见详情。</p>
+      </div>
+
+      <div class="toolbar">
+        <label class="search">
+          <span class="sr">搜索实例方法或论文</span>
+          <input id="inst-search" type="search" placeholder="搜索方法 / 论文 / venue" autocomplete="off">
+        </label>
+        <label class="check"><input id="inst-only-open" type="checkbox"> 只看开源</label>
+        <label class="check"><input id="inst-only-zero" type="checkbox"> 仅零样本（无 3D 掩码监督）</label>
+        <label class="select">
+          <span class="sr">排序</span>
+          <select id="inst-sort">
+            <option value="ap">按 AP 降序</option>
+            <option value="year">按年份降序</option>
+            <option value="name">按方法名</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="caption-row">
+        <h2 id="instance-caption">实例分割 · AP</h2>
+        <p id="instance-sub">—</p>
+      </div>
+
+      <div class="inst-tabs" id="inst-tabs" role="tablist" aria-label="实例分割数据集"></div>
+
+      <div class="tablewrap">
+        <table class="board inst-board" id="inst-board">
+          <thead>
+            <tr>
+              <th scope="col" class="c-rank">名次</th>
+              <th scope="col" class="c-method">方法</th>
+              <th scope="col" class="c-venue">发表</th>
+              <th scope="col" class="c-ap">AP</th>
+              <th scope="col" class="c-ap50">AP50</th>
+              <th scope="col" class="c-ap25">AP25</th>
+              <th scope="col" class="c-setting">设定</th>
+              <th scope="col" class="c-mask">2D 掩码</th>
+              <th scope="col" class="c-corr">视图一致性 / 融合</th>
+              <th scope="col" class="c-proposal">3D 提案</th>
+              <th scope="col" class="c-code">开源</th>
+              <th scope="col" class="c-more"><span class="sr">详情</span></th>
+            </tr>
+          </thead>
+          <tbody id="inst-body"></tbody>
+        </table>
+        <p class="empty" id="inst-empty" hidden>没有符合当前筛选的结果。</p>
+      </div>
+
+      <p class="caveat">
+        AP 来自各论文的自报表格；同一方法在「有/无 3D 掩码监督」「在线/离线」下是不同设置，不能直接相减。
+        带「转引」标记的数值来自 OpenTrack3D 的对照表；类别集合与数据集划分以详情中的出处为准。
+      </p>
+    </section>
   </main>
 
   <section class="scope wrap" aria-labelledby="scope-title">
     <h2 id="scope-title">收录与排除</h2>
     <div class="scope-grid">
       <div>
-        <h3>收录标准</h3>
+        <h3>语义收录标准</h3>
         <p>必须同时有：多视角 RGB/RGB-D 输入、2D 特征或分割、显式的像素-点对应、多视角融合，以及落到 3D 的蒸馏/集成。类别集合须为 ScanNet20 / nuScenes16 / Matterport21 的常见协议。</p>
+        <h3 style="margin-top:14px">实例收录标准</h3>
+        <p>零样本/开放词汇 3D 实例分割，且从多视角 2D mask 经过视图一致性、跟踪或融合提升到 3D；只收报告 AP 的论文，纯 3D 实例方法（Mask3D 等监督基线）不混入。</p>
       </div>
       <div>
         <h3>排除（附原因）</h3>
         <ul>
+          <li>纯 3D 实例分割（Mask3D 等监督方法）与 3DGS 实例方法：没有 2D→3D 提升。</li>
           <li>PLA、RegionPLC：区域-语言对比，没有多视图投影。</li>
           <li>CLIP2Scene、CLIP-FO3D：无位姿的单视图/特征蒸馏。</li>
           <li>Diff2Scene：文本到图像扩散先验，不做多视角对应。</li>
@@ -249,5 +315,6 @@
 
   <script src="data/leaderboard.js"></script>
   <script src="assets/mv.js"></script>
+  <script src="assets/instance.js"></script>
 </body>
 </html>

@@ -1,0 +1,615 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-10",
+  "datasets": [
+    {
+      "key": "scannet200",
+      "label": "ScanNet200",
+      "classes": 200,
+      "split": "val",
+      "note": "200 类长尾实例分割"
+    },
+    {
+      "key": "scannetpp",
+      "label": "ScanNet++",
+      "classes": 0,
+      "split": "val",
+      "note": "高保真室内扫描"
+    },
+    {
+      "key": "replica",
+      "label": "Replica",
+      "classes": 0,
+      "split": "val",
+      "note": "合成室内场景"
+    },
+    {
+      "key": "scannet_v2",
+      "label": "ScanNet v2",
+      "classes": 18,
+      "split": "val",
+      "note": "18 类实例分割"
+    },
+    {
+      "key": "matterport3d",
+      "label": "Matterport3D",
+      "classes": 0,
+      "split": "val",
+      "note": "建筑级室内场景"
+    }
+  ],
+  "methods": [
+    {
+      "id": "sam2object",
+      "method": "SAM2Object",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": false,
+      "paper": {
+        "title": "SAM2Object: Consolidating View Consistency via SAM2 for Zero-Shot 3D Instance Segmentation",
+        "authors": [
+          "J. Zhao et al."
+        ],
+        "year": 2025,
+        "venue": "CVPR 2025",
+        "venue_type": "conference",
+        "arxiv_id": null,
+        "doi": null,
+        "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Zhao_SAM2Object_Consolidating_View_Consistency_via_SAM2_for_Zero-Shot_3D_Instance_CVPR_2025_paper.html",
+        "code_url": "https://github.com/jihuaizhaohd/SAM2Object",
+        "open_source": "yes"
+      },
+      "pipeline": {
+        "mask_2d": "SAM2",
+        "correspondence": "跨帧 mask 跟踪 + 3D 几何先验",
+        "fusion": "视图一致性合并 + mask 质量过滤",
+        "proposal_3d": "超点 / 几何基元"
+      },
+      "results": {
+        "scannet200": {
+          "ap": 13.3,
+          "ap50": 19.0,
+          "ap25": 23.8,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "原论文未在本地打开表格，ScanNet200 数值转引自 OpenTrack3D 对照表。"
+    },
+    {
+      "id": "sai3d",
+      "method": "SAI3D",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": false,
+      "paper": {
+        "title": "SAI3D: Segment Any Instance in 3D Scenes",
+        "authors": [
+          "Y. Yin et al."
+        ],
+        "year": 2024,
+        "venue": "CVPR 2024",
+        "venue_type": "conference",
+        "arxiv_id": "2312.11557",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2312.11557",
+        "code_url": "https://github.com/yd-yin/SAI3D",
+        "open_source": "yes"
+      },
+      "pipeline": {
+        "mask_2d": "SAM",
+        "correspondence": "多视图 mask 投影到 3D 几何基元",
+        "fusion": "跨视图 mask 合并 + 3D 基元增长",
+        "proposal_3d": "几何基元 / 区域增长"
+      },
+      "results": {
+        "scannet_v2": {
+          "ap": 30.8,
+          "ap50": 50.5,
+          "ap25": 70.6,
+          "source": "SAI3D, CVPR 2024, Tab.8",
+          "source_kind": "primary",
+          "locator": "Table 8"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "ScanNet v2 18 类设置。"
+    },
+    {
+      "id": "openmask3d",
+      "method": "OpenMask3D",
+      "task": "instance",
+      "setting": "open_vocab",
+      "online": false,
+      "paper": {
+        "title": "OpenMask3D: Open-Vocabulary 3D Instance Segmentation",
+        "authors": [
+          "A. Takmaz et al."
+        ],
+        "year": 2023,
+        "venue": "NeurIPS 2023",
+        "venue_type": "conference",
+        "arxiv_id": "2306.13631",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2306.13631",
+        "code_url": "https://github.com/OpenMask3D/openmask3d",
+        "open_source": "yes"
+      },
+      "pipeline": {
+        "mask_2d": "Mask3D 类无关 3D 掩码 + 多视图 CLIP 特征",
+        "correspondence": "3D 掩码投影到多视图",
+        "fusion": "多视图 CLIP 特征池化",
+        "proposal_3d": "类别无关 3D 实例掩码"
+      },
+      "results": {
+        "scannet200": {
+          "ap": 15.0,
+          "ap50": 19.7,
+          "ap25": 23.1,
+          "source": "OpenMask3D, NeurIPS 2023, Tab.4",
+          "source_kind": "primary",
+          "locator": "Table 4"
+        },
+        "replica": {
+          "ap": 13.1,
+          "ap50": 18.4,
+          "ap25": 24.2,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "使用在 3D 上训练过的类无关掩码，属开放词汇而非训练-free。"
+    },
+    {
+      "id": "maskclustering",
+      "method": "MaskClustering",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": false,
+      "paper": {
+        "title": "MaskClustering: View Consensus based Mask Graph Clustering for Open-Vocabulary 3D Instance Segmentation",
+        "authors": [
+          "M. Yan et al."
+        ],
+        "year": 2024,
+        "venue": "CVPR 2024",
+        "venue_type": "conference",
+        "arxiv_id": "2401.07745",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2401.07745",
+        "code_url": "https://github.com/PKU-EPIC/MaskClustering",
+        "open_source": "yes"
+      },
+      "pipeline": {
+        "mask_2d": "SAM + CLIP",
+        "correspondence": "相邻视图 mask 关联",
+        "fusion": "视图共识 mask 图聚类",
+        "proposal_3d": "3D 超点 / 掩码"
+      },
+      "results": {
+        "scannetpp": {
+          "ap": 7.8,
+          "ap50": 10.7,
+          "ap25": 12.1,
+          "source": "MaskClustering, CVPR 2024, Tab.3",
+          "source_kind": "primary",
+          "locator": "Table 3"
+        },
+        "matterport3d": {
+          "ap": 11.1,
+          "ap50": 21.1,
+          "ap25": 31.2,
+          "source": "MaskClustering, CVPR 2024, Tab.3",
+          "source_kind": "primary",
+          "locator": "Table 3"
+        },
+        "scannet200": {
+          "ap": 12.0,
+          "ap50": 23.3,
+          "ap25": 30.1,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "Table 3 的 semantic 列；class-agnostic 列更高但不与语义 AP 混排。"
+    },
+    {
+      "id": "sampro3d",
+      "method": "SAMPro3D",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": false,
+      "paper": {
+        "title": "SAMPro3D: Locating SAM Prompts in 3D for Zero-Shot Instance Segmentation",
+        "authors": [
+          "M. Xu et al."
+        ],
+        "year": 2025,
+        "venue": "3DV 2025",
+        "venue_type": "conference",
+        "arxiv_id": "2311.17707",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2311.17707",
+        "code_url": "https://github.com/GAP-LAB-CUHK-SZ/SAMPro3D",
+        "open_source": "yes"
+      },
+      "pipeline": {
+        "mask_2d": "SAM",
+        "correspondence": "3D 提示定位 + 跨视图像素提示对齐",
+        "fusion": "视图一致的 mask 合并",
+        "proposal_3d": "超点 / 3D 掩码"
+      },
+      "results": {
+        "scannet_v2": {
+          "ap": 24.3,
+          "ap50": 45.7,
+          "ap25": 67.7,
+          "source": "SAMPro3D, 3DV 2025, Tab.1",
+          "source_kind": "primary",
+          "locator": "Table 1"
+        },
+        "scannet200": {
+          "ap": 26.3,
+          "ap50": 47.2,
+          "ap25": 68.6,
+          "source": "SAMPro3D, 3DV 2025, Tab.1",
+          "source_kind": "primary",
+          "locator": "Table 1"
+        },
+        "scannetpp": {
+          "ap": 20.3,
+          "ap50": 35.6,
+          "ap25": 53.2,
+          "source": "SAMPro3D, 3DV 2025, Tab.1",
+          "source_kind": "primary",
+          "locator": "Table 1"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": ""
+    },
+    {
+      "id": "openyolo3d",
+      "method": "Open-YOLO 3D",
+      "task": "instance",
+      "setting": "open_vocab",
+      "online": false,
+      "paper": {
+        "title": "Open-YOLO 3D: Towards Fast and Accurate Open-Vocabulary 3D Instance Segmentation",
+        "authors": [
+          "A. Boudjoghra et al."
+        ],
+        "year": 2025,
+        "venue": "ICLR 2025",
+        "venue_type": "conference",
+        "arxiv_id": "2406.02548",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2406.02548",
+        "code_url": "https://github.com/aminebdj/OpenYOLO3D",
+        "open_source": "yes"
+      },
+      "pipeline": {
+        "mask_2d": "YOLOv8 + CLIP",
+        "correspondence": "2D 检测/掩码投影到 3D",
+        "fusion": "多视图 2D 检测投票",
+        "proposal_3d": "3D 掩码网络"
+      },
+      "results": {
+        "scannet200": {
+          "ap": 21.9,
+          "ap50": 28.3,
+          "ap25": 31.7,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        },
+        "replica": {
+          "ap": 23.7,
+          "ap50": 28.6,
+          "ap25": 34.8,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "使用 ScanNet200 训练 3D 掩码网络，属开放词汇而非训练-free。"
+    },
+    {
+      "id": "open3dis",
+      "method": "Open3DIS",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": false,
+      "paper": {
+        "title": "Open3DIS: Open-Vocabulary 3D Instance Segmentation with 2D Mask Guidance",
+        "authors": [
+          "P. Nguyen et al."
+        ],
+        "year": 2024,
+        "venue": "CVPR 2024",
+        "venue_type": "conference",
+        "arxiv_id": "2312.10671",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2312.10671",
+        "code_url": "https://github.com/VinAIResearch/Open3DIS",
+        "open_source": "yes"
+      },
+      "pipeline": {
+        "mask_2d": "SAM 2D 掩码",
+        "correspondence": "2D 掩码投影 + 3D 提案",
+        "fusion": "2D mask guidance 与 3D 超点合并",
+        "proposal_3d": "3D 实例提案"
+      },
+      "results": {
+        "scannet200": {
+          "ap": 18.2,
+          "ap50": 26.1,
+          "ap25": 31.4,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        },
+        "replica": {
+          "ap": 18.2,
+          "ap50": 25.9,
+          "ap25": 31.0,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "无 3D mask 监督的 zero-shot 行；带 3D mask 监督的变体更高，不与本行混排。"
+    },
+    {
+      "id": "any3dis",
+      "method": "Any3DIS",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": false,
+      "paper": {
+        "title": "Any3DIS: Class-Agnostic 3D Instance Segmentation by 2D Mask Tracking",
+        "authors": [
+          "P. Nguyen et al."
+        ],
+        "year": 2025,
+        "venue": "CVPR 2025",
+        "venue_type": "conference",
+        "arxiv_id": "2411.16183",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2411.16183",
+        "code_url": null,
+        "open_source": "unknown"
+      },
+      "pipeline": {
+        "mask_2d": "SAM 2D mask tracking",
+        "correspondence": "2D 掩码跟踪 + 3D 关联",
+        "fusion": "跨帧 mask 跟踪与层次合并",
+        "proposal_3d": "3D 实例提案"
+      },
+      "results": {
+        "scannet200": {
+          "ap": 19.1,
+          "ap50": null,
+          "ap25": null,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "仅查到 AP；AP50/AP25 未在该表列出。"
+    },
+    {
+      "id": "detailsmatter",
+      "method": "Details Matter",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": false,
+      "paper": {
+        "title": "Details Matter for Indoor Open-vocabulary 3D Instance Segmentation",
+        "authors": [
+          "S. Zhu et al."
+        ],
+        "year": 2025,
+        "venue": "ICCV 2025",
+        "venue_type": "conference",
+        "arxiv_id": "2507.23134",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2507.23134",
+        "code_url": null,
+        "open_source": "unknown"
+      },
+      "pipeline": {
+        "mask_2d": "SAM + Alpha-CLIP",
+        "correspondence": "2D 掩码投影 + 3D 提案",
+        "fusion": "SMS filtering + 多视图特征",
+        "proposal_3d": "3D 实例提案"
+      },
+      "results": {
+        "scannet200": {
+          "ap": 21.5,
+          "ap50": 31.2,
+          "ap25": 37.7,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        },
+        "replica": {
+          "ap": 20.8,
+          "ap50": 32.4,
+          "ap25": 38.5,
+          "source": "OpenTrack3D, Tab.2",
+          "source_kind": "secondary",
+          "locator": "Table 2"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "零样本行；原论文另有更高配置，不与本行混排。"
+    },
+    {
+      "id": "opentrack3d",
+      "method": "OpenTrack3D",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": false,
+      "paper": {
+        "title": "OpenTrack3D: Towards Accurate and Generalizable Open-Vocabulary 3D Instance Segmentation",
+        "authors": [
+          "OpenTrack3D authors"
+        ],
+        "year": 2025,
+        "venue": "arXiv preprint 2025",
+        "venue_type": "preprint",
+        "arxiv_id": "2512.03532",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2512.03532",
+        "code_url": null,
+        "open_source": "unknown"
+      },
+      "pipeline": {
+        "mask_2d": "2D mask tracking + MLLM 分类",
+        "correspondence": "2D 掩码跟踪到 3D",
+        "fusion": "track 级 mask 合并 + 多视图分类",
+        "proposal_3d": "3D 实例掩码"
+      },
+      "results": {
+        "scannet200": {
+          "ap": 26.0,
+          "ap50": 37.7,
+          "ap25": 45.4,
+          "source": "OpenTrack3D, arXiv 2025, Tab.2",
+          "source_kind": "primary",
+          "locator": "Table 2"
+        },
+        "replica": {
+          "ap": 23.9,
+          "ap50": 36.4,
+          "ap25": 47.6,
+          "source": "OpenTrack3D, arXiv 2025, Tab.2",
+          "source_kind": "primary",
+          "locator": "Table 2"
+        },
+        "scannetpp": {
+          "ap": 20.6,
+          "ap50": 34.2,
+          "ap25": 43.4,
+          "source": "OpenTrack3D, arXiv 2025, Tab.6",
+          "source_kind": "primary",
+          "locator": "Table 6"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": ""
+    },
+    {
+      "id": "embodiedsam",
+      "method": "EmbodiedSAM",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": true,
+      "paper": {
+        "title": "EmbodiedSAM: Online Segment Any 3D Thing in Real Time",
+        "authors": [
+          "X. Xu et al."
+        ],
+        "year": 2025,
+        "venue": "ICLR 2025",
+        "venue_type": "conference",
+        "arxiv_id": "2408.11811",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2408.11811",
+        "code_url": "https://github.com/xuxw98/ESAM",
+        "open_source": "yes"
+      },
+      "pipeline": {
+        "mask_2d": "SAM2 在线跟踪",
+        "correspondence": "在线 2D 到 3D 掩码提升",
+        "fusion": "在线 mask 跟踪 + 3D 查询",
+        "proposal_3d": "在线 3D 实例查询"
+      },
+      "results": {
+        "scannet200": {
+          "ap": 28.8,
+          "ap50": 52.2,
+          "ap25": 69.3,
+          "source": "EmbodiedSAM, ICLR 2025, Tab.11",
+          "source_kind": "primary",
+          "locator": "Table 11"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "在线设置；ScanNet200→SceneNN 跨域表中的 ScanNet200 列。"
+    },
+    {
+      "id": "onlineanyseg",
+      "method": "OnlineAnySeg",
+      "task": "instance",
+      "setting": "zero_shot",
+      "online": true,
+      "paper": {
+        "title": "OnlineAnySeg: Online Zero-Shot 3D Segmentation by Visual Foundation Model Guided 2D Mask Merging",
+        "authors": [
+          "Y. Tang et al."
+        ],
+        "year": 2025,
+        "venue": "CVPR 2025",
+        "venue_type": "conference",
+        "arxiv_id": "2503.01309",
+        "doi": null,
+        "url": "https://arxiv.org/abs/2503.01309",
+        "code_url": "https://github.com/yjtang249/OnlineAnySeg",
+        "open_source": "yes"
+      },
+      "pipeline": {
+        "mask_2d": "SAM2 在线",
+        "correspondence": "在线 2D mask 合并到 3D",
+        "fusion": "VFM 引导的 2D mask 合并",
+        "proposal_3d": "在线 3D 实例"
+      },
+      "results": {
+        "scannet200": {
+          "ap": 18.6,
+          "ap50": 36.1,
+          "ap25": 53.5,
+          "source": "OnlineAnySeg, CVPR 2025, Tab.5",
+          "source_kind": "primary",
+          "locator": "Table 5"
+        }
+      },
+      "verified": true,
+      "verified_at": "2026-11-10",
+      "added_at": "2026-11-10",
+      "notes": "在线设置。"
+    }
+  ]
+}

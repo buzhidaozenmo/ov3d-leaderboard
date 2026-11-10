@@ -58,6 +58,7 @@ OPEN_SOURCE = ("yes", "partial", "no", "unknown")
 SOURCE_KINDS = ("primary", "secondary")
 TRACKS = ("ov", "multi_view")
 STAGES_3D = ("3d_distill", "self_distill", "2d3d_ensemble", "few_label")
+INSTANCE_SETTINGS = ("zero_shot", "open_vocab")
 
 
 class DataError(Exception):
@@ -224,11 +225,143 @@ def rank_methods(
     return ranks, best
 
 
+def load_instance() -> dict:
+    path = DATA / "instance.json"
+    if not path.exists():
+        return {"schema_version": 1, "datasets": [], "methods": []}
+    try:
+        return read_json(path)
+    except json.JSONDecodeError as exc:
+        raise DataError(f"data/instance.json 不是合法 JSON：{exc}") from exc
+
+
+def validate_instance(payload: dict) -> list[str]:
+    errors: list[str] = []
+    if payload.get("schema_version") != 1:
+        errors.append("instance: schema_version 必须为 1")
+    datasets = payload.get("datasets")
+    if not isinstance(datasets, list) or not datasets:
+        errors.append("instance: datasets 必须是非空数组")
+        return errors
+    ds_keys = set()
+    for index, ds in enumerate(datasets):
+        key = ds.get("key") if isinstance(ds, dict) else None
+        if not key:
+            errors.append(f"instance.datasets[{index}].key 缺失")
+        elif key in ds_keys:
+            errors.append(f"instance: 数据集重复 {key}")
+        else:
+            ds_keys.add(key)
+        if not ds.get("label"):
+            errors.append(f"instance.datasets[{index}].label 缺失")
+
+    methods = payload.get("methods")
+    if not isinstance(methods, list) or not methods:
+        errors.append("instance.methods 必须是非空数组")
+        return errors
+
+    seen = set()
+    for index, item in enumerate(methods):
+        where = f"instance.methods[{index}]"
+        mid = item.get("id") if isinstance(item, dict) else None
+        if not mid:
+            errors.append(f"{where}.id 缺失")
+            continue
+        if mid in seen:
+            errors.append(f"instance: id 重复 {mid}")
+            continue
+        seen.add(mid)
+        where = f"instance.{mid}"
+        if item.get("task") != "instance":
+            errors.append(f"{where}: task 必须是 instance")
+        if item.get("setting") not in INSTANCE_SETTINGS:
+            errors.append(f"{where}: setting 非法 {item.get('setting')!r}")
+        if not isinstance(item.get("online"), bool):
+            errors.append(f"{where}: online 必须是布尔值")
+        paper = item.get("paper") or {}
+        for key in ("title", "venue"):
+            if not paper.get(key):
+                errors.append(f"{where}: paper.{key} 缺失")
+        if not isinstance(paper.get("year"), int):
+            errors.append(f"{where}: paper.year 必须是整数")
+        if paper.get("venue_type") not in VENUE_TYPES:
+            errors.append(f"{where}: paper.venue_type 非法")
+        if paper.get("open_source") not in OPEN_SOURCE:
+            errors.append(f"{where}: paper.open_source 非法")
+        if paper.get("open_source") == "yes" and not str(paper.get("code_url") or "").startswith("http"):
+            errors.append(f"{where}: open_source=yes 但缺少 code_url")
+        if not str(paper.get("url") or "").startswith("http"):
+            errors.append(f"{where}: paper.url 缺失")
+        pipeline = item.get("pipeline") or {}
+        for key in ("mask_2d", "correspondence", "fusion", "proposal_3d"):
+            if not pipeline.get(key):
+                errors.append(f"{where}: pipeline.{key} 缺失")
+        results = item.get("results")
+        if not isinstance(results, dict) or not results:
+            errors.append(f"{where}: results 必须是非空对象")
+            continue
+        for ds_key, result in results.items():
+            if ds_key not in ds_keys:
+                errors.append(f"{where}: 未知实例数据集 {ds_key}")
+                continue
+            ap = result.get("ap")
+            if not isinstance(ap, (int, float)) or not (0 < ap <= 100):
+                errors.append(f"{where}.{ds_key}: ap 必须在 (0,100] 内")
+            for key in ("ap50", "ap25"):
+                value = result.get(key)
+                if value is not None and (not isinstance(value, (int, float)) or not (0 < value <= 100)):
+                    errors.append(f"{where}.{ds_key}: {key} 必须在 (0,100] 内或为 null")
+            if result.get("source_kind") not in SOURCE_KINDS:
+                errors.append(f"{where}.{ds_key}: source_kind 非法")
+            for key in ("source", "locator"):
+                if not result.get(key):
+                    errors.append(f"{where}.{ds_key}: {key} 缺失")
+        if not isinstance(item.get("verified"), bool):
+            errors.append(f"{where}: verified 必须是布尔值")
+    return errors
+
+
+def rank_instance(instance: dict) -> tuple[dict[str, dict[str, int]], dict[str, float]]:
+    ranks: dict[str, dict[str, int]] = {}
+    best: dict[str, float] = {}
+    datasets = instance.get("datasets") or []
+    methods = instance.get("methods") or []
+    for ds in datasets:
+        key = ds["key"]
+        rows = []
+        for item in methods:
+            if not item.get("verified"):
+                continue
+            result = (item.get("results") or {}).get(key)
+            if result and isinstance(result.get("ap"), (int, float)):
+                rows.append((float(result["ap"]), item["id"]))
+        rows.sort(key=lambda pair: (-pair[0], pair[1]))
+        ds_ranks: dict[str, int] = {}
+        previous_value = None
+        previous_rank = 0
+        for position, (value, mid) in enumerate(rows, start=1):
+            if previous_value is not None and value == previous_value:
+                ds_ranks[mid] = previous_rank
+            else:
+                ds_ranks[mid] = position
+                previous_rank = position
+                previous_value = value
+        ranks[key] = ds_ranks
+        if rows:
+            best[key] = rows[0][0]
+    return ranks, best
+
+
 def build_payload(papers: dict, state: dict, candidates: list[dict]) -> dict:
     methods = papers["methods"]
     ranks, best = rank_methods(methods)
     mv_ranks, mv_best = rank_methods(methods, "multi_view")
     mv_methods = [m for m in methods if "multi_view" in (m.get("tracks") or ["ov"])]
+    instance = load_instance()
+    instance_errors = validate_instance(instance)
+    if instance_errors:
+        raise DataError("data/instance.json 校验失败：\n  - " + "\n  - ".join(instance_errors))
+    inst_ranks, inst_best = rank_instance(instance)
 
     pending = [c for c in candidates if c.get("status") == "pending"]
     pending.sort(key=lambda c: c.get("found_at") or "", reverse=True)
@@ -239,13 +372,16 @@ def build_payload(papers: dict, state: dict, candidates: list[dict]) -> dict:
         group_counts[item["group"]] = group_counts.get(item["group"], 0) + 1
 
     last_checked = state.get("last_check") or state.get("last_success") or papers.get("updated_at")
+    data_updated = max(
+        [value for value in (papers.get("updated_at"), instance.get("updated_at")) if value] or [""]
+    )
     next_check = state.get("next_check")
     last_error = state.get("last_error")
 
     return {
         "schema_version": 1,
         "generated_at": now_cst(),
-        "data_updated_at": papers.get("updated_at"),
+        "data_updated_at": data_updated,
         "last_checked": last_checked,
         "next_check": next_check,
         "last_error": last_error,
@@ -258,6 +394,16 @@ def build_payload(papers: dict, state: dict, candidates: list[dict]) -> dict:
             "ranks": mv_ranks,
             "best": mv_best,
             "counts": {"methods": len(mv_methods), "pending": len(mv_pending)},
+        },
+        "instance": {
+            "datasets": instance.get("datasets") or [],
+            "methods": instance.get("methods") or [],
+            "ranks": inst_ranks,
+            "best": inst_best,
+            "counts": {
+                "methods": len(instance.get("methods") or []),
+                "results": sum(len(m.get("results") or {}) for m in instance.get("methods") or []),
+            },
         },
         "counts": {
             "papers": len(methods),
@@ -341,12 +487,26 @@ def main(argv: list[str] | None = None) -> int:
 
     state = read_json(DATA / "state.json", {}) or {}
     candidates = read_json(DATA / "candidates.json", []) or []
-    payload = build_payload(papers, state, candidates)
+    instance = load_instance()
+    instance_errors = validate_instance(instance)
+    if instance_errors:
+        print("[build] 实例数据校验失败：", file=sys.stderr)
+        for error in instance_errors:
+            print(f"  - {error}", file=sys.stderr)
+        return 1
+
+    try:
+        payload = build_payload(papers, state, candidates)
+    except DataError as exc:
+        print(f"[build] 失败：{exc}", file=sys.stderr)
+        return 1
 
     if args.check:
         print(
-            f"[build] 校验通过：{len(papers['methods'])} 条记录，"
-            f"{payload['counts']['results']} 个结果，待审 {payload['counts']['pending']} 条"
+            f"[build] 校验通过：{len(papers['methods'])} 条语义记录，"
+            f"{len(instance.get('methods') or [])} 条实例记录，"
+            f"{payload['counts']['results']} 个语义结果，"
+            f"待审 {payload['counts']['pending']} 条"
         )
         return 0
 

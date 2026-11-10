@@ -241,21 +241,82 @@ h1 {
 
 /* ---------- multi-view table ---------- */
 
-.mv-board .c-rank { width: 54px; }
-.mv-board .c-method { width: 226px; }
-.mv-board .c-venue { width: 108px; }
-.mv-board .c-miou { width: 108px; }
-.mv-board .c-macc { width: 66px; }
-.mv-board .c-teacher { width: 132px; }
-.mv-board .c-corr { width: 218px; }
-.mv-board .c-stage { width: 104px; }
-.mv-board .c-code { width: 92px; }
-.mv-board .c-more { width: 40px; }
+.board.mv-board .c-rank { width: 54px; }
+.board.mv-board .c-method { width: 226px; }
+.board.mv-board .c-venue { width: 108px; }
+.board.mv-board .c-miou { width: 108px; }
+.board.mv-board .c-macc { width: 66px; }
+.board.mv-board .c-teacher { width: 132px; }
+.board.mv-board .c-corr { width: 218px; }
+.board.mv-board .c-stage { width: 104px; }
+.board.mv-board .c-code { width: 92px; }
+.board.mv-board .c-more { width: 40px; }
 
 .cell-small { display: block; font-size: 11px; line-height: 1.4; color: #3f3f3c; }
 .stack span { display: block; font-size: 11px; line-height: 1.45; color: #3f3f3c; }
 .stack .muted { font-size: 10px; color: var(--muted); }
-.mv-board .chip { white-space: nowrap; }
+.board.mv-board .chip { white-space: nowrap; }
+
+/* ---------- instance section ---------- */
+
+.sectionbreak {
+  margin-top: 58px;
+  border-top: 2px solid var(--ink);
+  padding-top: 14px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.sectionbreak span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+  white-space: nowrap;
+}
+
+.sectionbreak p { margin: 0; max-width: 58ch; font-size: 10px; line-height: 1.55; color: var(--muted); text-align: right; }
+
+.inst-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--ink);
+  margin-top: 4px;
+}
+
+.inst-tabs .tab {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  padding: 10px 16px 9px 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+
+.inst-tabs .tab + .tab { padding-left: 16px; border-left: 1px solid var(--rule); }
+.inst-tabs .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--red); }
+.inst-tabs .tab sup { font-size: 8px; font-weight: 500; color: var(--muted); margin-left: 3px; }
+
+.board.inst-board .c-rank { width: 50px; }
+.board.inst-board .c-method { width: 188px; }
+.board.inst-board .c-venue { width: 100px; }
+.board.inst-board .c-ap { width: 72px; }
+.board.inst-board .c-ap50 { width: 60px; }
+.board.inst-board .c-ap25 { width: 60px; }
+.board.inst-board .c-setting { width: 92px; }
+.board.inst-board .c-mask { width: 126px; }
+.board.inst-board .c-corr { width: 188px; }
+.board.inst-board .c-proposal { width: 112px; }
+.board.inst-board .c-code { width: 84px; }
+.board.inst-board .c-more { width: 36px; }
 
 /* ---------- scope ---------- */
 
@@ -792,10 +853,10 @@ tr.row:hover .more { border-color: var(--ink); }
   .pipeline-steps { grid-template-columns: 1fr; gap: 12px; }
   .scope-grid { grid-template-columns: 1fr; gap: 18px; }
 
-  .mv-board { display: block; width: 100%; }
-  .mv-board thead { display: none; }
-  .mv-board tbody { display: block; }
-  .mv-board tr.row {
+  .board.mv-board { display: block; width: 100%; }
+  .board.mv-board thead { display: none; }
+  .board.mv-board tbody { display: block; }
+  .board.mv-board tr.row {
     display: grid;
     grid-template-columns: 44px minmax(0, 1fr) 36px;
     grid-template-areas:
@@ -812,14 +873,14 @@ tr.row:hover .more { border-color: var(--ink); }
     padding: 16px 0 14px;
     border-bottom: 1px solid var(--rule);
   }
-  .mv-board tr.row td { display: block; border: 0; padding: 0; min-width: 0; width: auto; }
-  .mv-board tr.row .c-rank { grid-area: rank; }
-  .mv-board tr.row .c-method { grid-area: method; }
-  .mv-board tr.row .c-venue { grid-area: venue; }
-  .mv-board tr.row .c-miou { grid-area: miou; margin-top: 4px; }
-  .mv-board tr.row .c-macc { grid-area: macc; }
-  .mv-board tr.row .c-teacher { grid-area: teacher; margin-top: 2px; }
-  .mv-board tr.row .c-teacher::before {
+  .board.mv-board tr.row td { display: block; border: 0; padding: 0; min-width: 0; width: auto; }
+  .board.mv-board tr.row .c-rank { grid-area: rank; }
+  .board.mv-board tr.row .c-method { grid-area: method; }
+  .board.mv-board tr.row .c-venue { grid-area: venue; }
+  .board.mv-board tr.row .c-miou { grid-area: miou; margin-top: 4px; }
+  .board.mv-board tr.row .c-macc { grid-area: macc; }
+  .board.mv-board tr.row .c-teacher { grid-area: teacher; margin-top: 2px; }
+  .board.mv-board tr.row .c-teacher::before {
     content: "2D 教师";
     display: block;
     font-size: 8px;
@@ -827,8 +888,8 @@ tr.row:hover .more { border-color: var(--ink); }
     text-transform: uppercase;
     color: var(--muted);
   }
-  .mv-board tr.row .c-corr { grid-area: corr; margin-top: 2px; }
-  .mv-board tr.row .c-corr::before {
+  .board.mv-board tr.row .c-corr { grid-area: corr; margin-top: 2px; }
+  .board.mv-board tr.row .c-corr::before {
     content: "对应 / 融合";
     display: block;
     font-size: 8px;
@@ -836,16 +897,73 @@ tr.row:hover .more { border-color: var(--ink); }
     text-transform: uppercase;
     color: var(--muted);
   }
-  .mv-board tr.row .c-stage { grid-area: stage; justify-self: start; margin-top: 2px; }
-  .mv-board tr.row .c-code { grid-area: code; justify-self: start; margin-top: 2px; }
-  .mv-board tr.row .c-more { grid-area: more; justify-self: end; align-self: start; }
-  .mv-board tr.row .bar { max-width: 220px; }
-  .mv-board tr.row .number { font-size: 24px; }
+  .board.mv-board tr.row .c-stage { grid-area: stage; justify-self: start; margin-top: 2px; }
+  .board.mv-board tr.row .c-code { grid-area: code; justify-self: start; margin-top: 2px; }
+  .board.mv-board tr.row .c-more { grid-area: more; justify-self: end; align-self: start; }
+  .board.mv-board tr.row .bar { max-width: 220px; }
+  .board.mv-board tr.row .number { font-size: 24px; }
 
-  .mv-board .separator { display: block; }
-  .mv-board .separator td { display: block; border: 0; border-top: 2px solid var(--ink); }
-  .mv-board .details { display: block; }
-  .mv-board .details td { display: block; }
+  .board.mv-board .separator { display: block; }
+  .board.mv-board .separator td { display: block; border: 0; border-top: 2px solid var(--ink); }
+  .board.mv-board .details { display: block; }
+  .board.mv-board .details td { display: block; }
+
+  .sectionbreak { flex-direction: column; gap: 4px; }
+  .sectionbreak p { text-align: left; }
+
+  .board.inst-board { display: block; width: 100%; }
+  .board.inst-board thead { display: none; }
+  .board.inst-board tbody { display: block; }
+  .board.inst-board tr.row {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 36px;
+    grid-template-areas:
+      "rank method more"
+      "rank venue more"
+      "rank ap more"
+      "rank ap50 more"
+      "rank ap25 more"
+      "rank setting more"
+      "rank mask more"
+      "rank corr more"
+      "rank proposal more"
+      "rank code more";
+    column-gap: 12px;
+    row-gap: 5px;
+    padding: 16px 0 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .board.inst-board tr.row td { display: block; border: 0; padding: 0; min-width: 0; width: auto; }
+  .board.inst-board tr.row .c-rank { grid-area: rank; }
+  .board.inst-board tr.row .c-method { grid-area: method; }
+  .board.inst-board tr.row .c-venue { grid-area: venue; }
+  .board.inst-board tr.row .c-ap { grid-area: ap; margin-top: 4px; }
+  .board.inst-board tr.row .c-ap50 { grid-area: ap50; }
+  .board.inst-board tr.row .c-ap25 { grid-area: ap25; }
+  .board.inst-board tr.row .c-setting { grid-area: setting; justify-self: start; margin-top: 2px; }
+  .board.inst-board tr.row .c-mask { grid-area: mask; margin-top: 2px; }
+  .board.inst-board tr.row .c-corr { grid-area: corr; margin-top: 2px; }
+  .board.inst-board tr.row .c-proposal { grid-area: proposal; margin-top: 2px; }
+  .board.inst-board tr.row .c-code { grid-area: code; justify-self: start; margin-top: 2px; }
+  .board.inst-board tr.row .c-more { grid-area: more; justify-self: end; align-self: start; }
+  .board.inst-board tr.row .bar { max-width: 220px; }
+  .board.inst-board tr.row .number { font-size: 24px; }
+  .board.inst-board tr.row .c-ap50 .macc::before { content: "AP50 "; font-size: 8px; letter-spacing: 0.1em; color: var(--muted); }
+  .board.inst-board tr.row .c-ap25 .macc::before { content: "AP25 "; font-size: 8px; letter-spacing: 0.1em; color: var(--muted); }
+  .board.inst-board tr.row .c-mask::before,
+  .board.inst-board tr.row .c-corr::before,
+  .board.inst-board tr.row .c-proposal::before {
+    display: block;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .board.inst-board tr.row .c-mask::before { content: "2D 掩码"; }
+  .board.inst-board tr.row .c-corr::before { content: "视图一致性 / 融合"; }
+  .board.inst-board tr.row .c-proposal::before { content: "3D 提案"; }
+  .board.inst-board .details { display: block; }
+  .board.inst-board .details td { display: block; }
 
   .log-head { flex-direction: column; gap: 2px; }
   .log-head p { text-align: left; }
@@ -931,10 +1049,10 @@ tr.row:hover .more { border-color: var(--ink); }
   .pipeline-steps { grid-template-columns: 1fr; gap: 12px; }
   .scope-grid { grid-template-columns: 1fr; gap: 18px; }
 
-  .mv-board { display: block; width: 100%; }
-  .mv-board thead { display: none; }
-  .mv-board tbody { display: block; }
-  .mv-board tr.row {
+  .board.mv-board { display: block; width: 100%; }
+  .board.mv-board thead { display: none; }
+  .board.mv-board tbody { display: block; }
+  .board.mv-board tr.row {
     display: grid;
     grid-template-columns: 44px minmax(0, 1fr) 36px;
     grid-template-areas:
@@ -951,14 +1069,14 @@ tr.row:hover .more { border-color: var(--ink); }
     padding: 16px 0 14px;
     border-bottom: 1px solid var(--rule);
   }
-  .mv-board tr.row td { display: block; border: 0; padding: 0; min-width: 0; width: auto; }
-  .mv-board tr.row .c-rank { grid-area: rank; }
-  .mv-board tr.row .c-method { grid-area: method; }
-  .mv-board tr.row .c-venue { grid-area: venue; }
-  .mv-board tr.row .c-miou { grid-area: miou; margin-top: 4px; }
-  .mv-board tr.row .c-macc { grid-area: macc; }
-  .mv-board tr.row .c-teacher { grid-area: teacher; margin-top: 2px; }
-  .mv-board tr.row .c-teacher::before {
+  .board.mv-board tr.row td { display: block; border: 0; padding: 0; min-width: 0; width: auto; }
+  .board.mv-board tr.row .c-rank { grid-area: rank; }
+  .board.mv-board tr.row .c-method { grid-area: method; }
+  .board.mv-board tr.row .c-venue { grid-area: venue; }
+  .board.mv-board tr.row .c-miou { grid-area: miou; margin-top: 4px; }
+  .board.mv-board tr.row .c-macc { grid-area: macc; }
+  .board.mv-board tr.row .c-teacher { grid-area: teacher; margin-top: 2px; }
+  .board.mv-board tr.row .c-teacher::before {
     content: "2D 教师";
     display: block;
     font-size: 8px;
@@ -966,8 +1084,8 @@ tr.row:hover .more { border-color: var(--ink); }
     text-transform: uppercase;
     color: var(--muted);
   }
-  .mv-board tr.row .c-corr { grid-area: corr; margin-top: 2px; }
-  .mv-board tr.row .c-corr::before {
+  .board.mv-board tr.row .c-corr { grid-area: corr; margin-top: 2px; }
+  .board.mv-board tr.row .c-corr::before {
     content: "对应 / 融合";
     display: block;
     font-size: 8px;
@@ -975,16 +1093,73 @@ tr.row:hover .more { border-color: var(--ink); }
     text-transform: uppercase;
     color: var(--muted);
   }
-  .mv-board tr.row .c-stage { grid-area: stage; justify-self: start; margin-top: 2px; }
-  .mv-board tr.row .c-code { grid-area: code; justify-self: start; margin-top: 2px; }
-  .mv-board tr.row .c-more { grid-area: more; justify-self: end; align-self: start; }
-  .mv-board tr.row .bar { max-width: 220px; }
-  .mv-board tr.row .number { font-size: 24px; }
+  .board.mv-board tr.row .c-stage { grid-area: stage; justify-self: start; margin-top: 2px; }
+  .board.mv-board tr.row .c-code { grid-area: code; justify-self: start; margin-top: 2px; }
+  .board.mv-board tr.row .c-more { grid-area: more; justify-self: end; align-self: start; }
+  .board.mv-board tr.row .bar { max-width: 220px; }
+  .board.mv-board tr.row .number { font-size: 24px; }
 
-  .mv-board .separator { display: block; }
-  .mv-board .separator td { display: block; border: 0; border-top: 2px solid var(--ink); }
-  .mv-board .details { display: block; }
-  .mv-board .details td { display: block; }
+  .board.mv-board .separator { display: block; }
+  .board.mv-board .separator td { display: block; border: 0; border-top: 2px solid var(--ink); }
+  .board.mv-board .details { display: block; }
+  .board.mv-board .details td { display: block; }
+
+  .sectionbreak { flex-direction: column; gap: 4px; }
+  .sectionbreak p { text-align: left; }
+
+  .board.inst-board { display: block; width: 100%; }
+  .board.inst-board thead { display: none; }
+  .board.inst-board tbody { display: block; }
+  .board.inst-board tr.row {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 36px;
+    grid-template-areas:
+      "rank method more"
+      "rank venue more"
+      "rank ap more"
+      "rank ap50 more"
+      "rank ap25 more"
+      "rank setting more"
+      "rank mask more"
+      "rank corr more"
+      "rank proposal more"
+      "rank code more";
+    column-gap: 12px;
+    row-gap: 5px;
+    padding: 16px 0 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .board.inst-board tr.row td { display: block; border: 0; padding: 0; min-width: 0; width: auto; }
+  .board.inst-board tr.row .c-rank { grid-area: rank; }
+  .board.inst-board tr.row .c-method { grid-area: method; }
+  .board.inst-board tr.row .c-venue { grid-area: venue; }
+  .board.inst-board tr.row .c-ap { grid-area: ap; margin-top: 4px; }
+  .board.inst-board tr.row .c-ap50 { grid-area: ap50; }
+  .board.inst-board tr.row .c-ap25 { grid-area: ap25; }
+  .board.inst-board tr.row .c-setting { grid-area: setting; justify-self: start; margin-top: 2px; }
+  .board.inst-board tr.row .c-mask { grid-area: mask; margin-top: 2px; }
+  .board.inst-board tr.row .c-corr { grid-area: corr; margin-top: 2px; }
+  .board.inst-board tr.row .c-proposal { grid-area: proposal; margin-top: 2px; }
+  .board.inst-board tr.row .c-code { grid-area: code; justify-self: start; margin-top: 2px; }
+  .board.inst-board tr.row .c-more { grid-area: more; justify-self: end; align-self: start; }
+  .board.inst-board tr.row .bar { max-width: 220px; }
+  .board.inst-board tr.row .number { font-size: 24px; }
+  .board.inst-board tr.row .c-ap50 .macc::before { content: "AP50 "; font-size: 8px; letter-spacing: 0.1em; color: var(--muted); }
+  .board.inst-board tr.row .c-ap25 .macc::before { content: "AP25 "; font-size: 8px; letter-spacing: 0.1em; color: var(--muted); }
+  .board.inst-board tr.row .c-mask::before,
+  .board.inst-board tr.row .c-corr::before,
+  .board.inst-board tr.row .c-proposal::before {
+    display: block;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .board.inst-board tr.row .c-mask::before { content: "2D 掩码"; }
+  .board.inst-board tr.row .c-corr::before { content: "视图一致性 / 融合"; }
+  .board.inst-board tr.row .c-proposal::before { content: "3D 提案"; }
+  .board.inst-board .details { display: block; }
+  .board.inst-board .details td { display: block; }
 
   h1 { grid-column: 1 / -1; margin-bottom: 14px; }
   .lede { grid-column: 1 / -1; margin-bottom: 22px; }

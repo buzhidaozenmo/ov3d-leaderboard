@@ -23,9 +23,14 @@
 | 页面 | 收录 | 额外列 |
 | --- | --- | --- |
 | `index.html` 总榜 | 所有开放词汇/少量标签/全监督参考方法 | 口径、矩阵视图 |
-| `multiview.html` 多视角子榜 | 同时具备多视角 2D 输入、像素-点对应、融合、3D 蒸馏/集成的开放词汇方法 | 2D 教师、对应/融合、3D 阶段 |
+| `multiview.html` 多视角子榜 | 语义：多视角 2D 特征 → 像素-点对应 → 融合 → 3D 蒸馏/集成；实例：多视角 2D mask → 视图一致性/跟踪 → 3D 实例 | 2D 教师/掩码、对应/融合、3D 阶段；实例为 AP/AP50/AP25、设定、3D 提案 |
 
-多视角子榜的严格口径排除了 PLA、RegionPLC、CLIP2Scene、CLIP-FO3D、Diff2Scene、PGOV3D、GeoZe、DMA、OV3D 与全监督多视角方法；排除理由写在页面「收录与排除」。
+多视角子榜包含两个任务：
+
+- **语义分割（mIoU）**：ScanNet v2 / nuScenes / Matterport3D；严格收多视角 2D 投影融合方法。
+- **实例分割（AP）**：ScanNet200 / ScanNet++ / Replica / ScanNet v2 / Matterport3D；收零样本/开放词汇、从多视角 2D mask 提升到 3D 实例的方法（SAM2Object、SAI3D、SAMPro3D、OpenTrack3D、EmbodiedSAM 等）。
+
+排除 PLA、RegionPLC、CLIP2Scene、CLIP-FO3D、Diff2Scene、PGOV3D、GeoZe、DMA、OV3D 与纯 3D/全监督实例方法；排除理由写在页面「收录与排除」。
 
 ## 排名规则
 
@@ -140,7 +145,8 @@ git add data && git commit -m "data: add MethodName" && git push
 | --- | --- |
 | `index.html` | 页面结构（源文件，构建时复制到 `_site/`） |
 | `assets/` | Swiss Style 样式、渲染逻辑、favicon |
-| `data/papers.json` | **唯一真源**：已核实的论文与数值 |
+| `data/papers.json` | 语义榜唯一真源：已核实的论文与数值 |
+| `data/instance.json` | 实例榜唯一真源：AP/AP50/AP25、设定与 2D→3D 管线 |
 | `data/candidates.json` | Actions 抓取的待审队列 |
 | `data/leaderboard.js` | 构建产物，页面读取 |
 | `data/state.json` | 最近抓取/成功/失败时间 |

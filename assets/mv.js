@@ -296,7 +296,8 @@
   }
 
   function renderStats() {
-    $("stat-methods").textContent = MV.counts.methods || MV.methods.length;
+    var instCount = (DATA.instance && DATA.instance.counts && DATA.instance.counts.methods) || 0;
+    $("stat-methods").textContent = (MV.counts.methods || MV.methods.length) + instCount;
     $("stat-pending").textContent = MV.counts.pending || 0;
     $("stat-check").textContent = DATA.last_checked || "—";
     $("stat-updated").textContent = DATA.data_updated_at || "—";

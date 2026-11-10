@@ -2,7 +2,7 @@
   {
     "at": "2026-11-10 09:45",
     "kind": "page",
-    "summary": "新增「多视角 2D→3D」子榜单：OpenScene、SAS、GeoGuide、GGSD、CUA-O3D 与 GeoPurify 参考组，补充 2D 教师/对应/融合/3D 阶段字段。"
+    "summary": "多视角 2D→3D 子榜扩展：语义 mIoU 6 个方法 + 实例 AP 12 个零样本/开放词汇方法（含 SAM2Object、SAI3D、SAMPro3D、OpenTrack3D、EmbodiedSAM 等）。"
   },
   {
     "at": "2026-11-09 17:50",

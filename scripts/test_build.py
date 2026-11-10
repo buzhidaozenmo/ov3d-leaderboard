@@ -132,6 +132,41 @@ class MultiViewTests(unittest.TestCase):
         self.assertEqual(out["multi_view"]["ranks"]["scannet_v2"], {"b": 1})
 
 
+class InstanceTests(unittest.TestCase):
+    def instance_payload(self):
+        return {
+            "schema_version": 1,
+            "datasets": [{"key": "scannet200", "label": "ScanNet200", "classes": 200}],
+            "methods": [{
+                "id": "x", "method": "X", "task": "instance", "setting": "zero_shot",
+                "online": False,
+                "paper": {
+                    "title": "X", "authors": ["A"], "year": 2025, "venue": "CVPR 2025",
+                    "venue_type": "conference", "url": "https://example.org",
+                    "code_url": None, "open_source": "unknown",
+                },
+                "pipeline": {"mask_2d": "SAM2", "correspondence": "track", "fusion": "merge", "proposal_3d": "mask"},
+                "results": {"scannet200": {"ap": 20.0, "ap50": 30.0, "ap25": 40.0,
+                                            "source": "Tab.1", "source_kind": "primary", "locator": "p.1"}},
+                "verified": True,
+            }],
+        }
+
+    def test_valid_instance(self):
+        self.assertEqual(build.validate_instance(self.instance_payload()), [])
+
+    def test_instance_missing_pipeline(self):
+        data = self.instance_payload()
+        del data["methods"][0]["pipeline"]["fusion"]
+        self.assertTrue(any("pipeline.fusion" in e for e in build.validate_instance(data)))
+
+    def test_instance_ranking(self):
+        data = self.instance_payload()
+        ranks, best = build.rank_instance(data)
+        self.assertEqual(ranks["scannet200"], {"x": 1})
+        self.assertEqual(best["scannet200"], 20.0)
+
+
 class RankingTests(unittest.TestCase):
     def test_descending_and_competition_rank(self):
         methods = [method("a", 60.0), method("b", 70.0), method("c", 60.0), method("d", 40.0)]
