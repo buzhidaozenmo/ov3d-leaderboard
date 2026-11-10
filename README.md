@@ -2,6 +2,9 @@
 
 **在线地址：<https://buzhidaozenmo.github.io/ov3d-leaderboard/>**
 
+- [开放词汇总榜](https://buzhidaozenmo.github.io/ov3d-leaderboard/)：所有开放词汇 3D 语义分割方法
+- [多视角 2D→3D 子榜](https://buzhidaozenmo.github.io/ov3d-leaderboard/multiview.html)：只收「多视角 2D 对应 → 融合 → 投影到 3D」这条管线的方法
+
 [![Build and deploy](https://github.com/buzhidaozenmo/ov3d-leaderboard/actions/workflows/pages.yml/badge.svg)](https://github.com/buzhidaozenmo/ov3d-leaderboard/actions/workflows/pages.yml)
 [![Daily harvest](https://github.com/buzhidaozenmo/ov3d-leaderboard/actions/workflows/daily.yml/badge.svg)](https://github.com/buzhidaozenmo/ov3d-leaderboard/actions/workflows/daily.yml)
 
@@ -14,6 +17,15 @@
 - 评测口径：文本编码器、是否 2D-3D 集成、是否自蒸馏、类别数与划分
 
 界面为瑞士国际主义（Swiss Style）风格：12 栏网格、Helvetica Neue、黑白 + 瑞士红、细线分隔、无圆角无阴影。
+
+## 两个页面
+
+| 页面 | 收录 | 额外列 |
+| --- | --- | --- |
+| `index.html` 总榜 | 所有开放词汇/少量标签/全监督参考方法 | 口径、矩阵视图 |
+| `multiview.html` 多视角子榜 | 同时具备多视角 2D 输入、像素-点对应、融合、3D 蒸馏/集成的开放词汇方法 | 2D 教师、对应/融合、3D 阶段 |
+
+多视角子榜的严格口径排除了 PLA、RegionPLC、CLIP2Scene、CLIP-FO3D、Diff2Scene、PGOV3D、GeoZe、DMA、OV3D 与全监督多视角方法；排除理由写在页面「收录与排除」。
 
 ## 排名规则
 

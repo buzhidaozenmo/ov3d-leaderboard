@@ -56,6 +56,8 @@ FAMILIES = ("3d_only", "2d3d_ensemble", "self_distill", "supervised")
 VENUE_TYPES = ("conference", "journal", "preprint", "workshop")
 OPEN_SOURCE = ("yes", "partial", "no", "unknown")
 SOURCE_KINDS = ("primary", "secondary")
+TRACKS = ("ov", "multi_view")
+STAGES_3D = ("3d_distill", "self_distill", "2d3d_ensemble", "few_label")
 
 
 class DataError(Exception):
@@ -170,12 +172,25 @@ def validate(payload: dict) -> list[str]:
                 if not result.get(key):
                     errors.append(f"{where}.{ds_key}: {key} 缺失")
 
+        tracks = item.get("tracks", ["ov"])
+        if not isinstance(tracks, list) or not tracks or any(t not in TRACKS for t in tracks):
+            errors.append(f"{where}: tracks 必须是 {TRACKS} 的非空子集")
+        elif "multi_view" in tracks:
+            mv = item.get("mv") or {}
+            for key in ("teacher_2d", "correspondence", "fusion", "student_3d"):
+                if not mv.get(key):
+                    errors.append(f"{where}: mv.{key} 缺失")
+            if mv.get("stage_3d") not in STAGES_3D:
+                errors.append(f"{where}: mv.stage_3d 非法 {mv.get('stage_3d')!r}")
+
         if item.get("verified") is not True and item.get("verified") is not False:
             errors.append(f"{where}: verified 必须是布尔值")
     return errors
 
 
-def rank_methods(methods: list[dict]) -> tuple[dict[str, dict[str, int]], dict[str, float]]:
+def rank_methods(
+    methods: list[dict], track: str | None = None
+) -> tuple[dict[str, dict[str, int]], dict[str, float]]:
     """Competition ranking among verified open-vocabulary rows, per dataset."""
     ranks: dict[str, dict[str, int]] = {}
     best: dict[str, float] = {}
@@ -186,6 +201,8 @@ def rank_methods(methods: list[dict]) -> tuple[dict[str, dict[str, int]], dict[s
             if not item.get("verified"):
                 continue
             if item.get("group") != "open_vocab":
+                continue
+            if track and track not in (item.get("tracks") or ["ov"]):
                 continue
             result = (item.get("results") or {}).get(key)
             if result and isinstance(result.get("miou"), (int, float)):
@@ -210,9 +227,12 @@ def rank_methods(methods: list[dict]) -> tuple[dict[str, dict[str, int]], dict[s
 def build_payload(papers: dict, state: dict, candidates: list[dict]) -> dict:
     methods = papers["methods"]
     ranks, best = rank_methods(methods)
+    mv_ranks, mv_best = rank_methods(methods, "multi_view")
+    mv_methods = [m for m in methods if "multi_view" in (m.get("tracks") or ["ov"])]
 
     pending = [c for c in candidates if c.get("status") == "pending"]
     pending.sort(key=lambda c: c.get("found_at") or "", reverse=True)
+    mv_pending = [c for c in pending if "multi_view" in (c.get("tracks") or ["ov"])]
 
     group_counts = {group: 0 for group in GROUPS}
     for item in methods:
@@ -233,6 +253,12 @@ def build_payload(papers: dict, state: dict, candidates: list[dict]) -> dict:
         "methods": methods,
         "ranks": ranks,
         "best": best,
+        "multi_view": {
+            "methods": mv_methods,
+            "ranks": mv_ranks,
+            "best": mv_best,
+            "counts": {"methods": len(mv_methods), "pending": len(mv_pending)},
+        },
         "counts": {
             "papers": len(methods),
             "unique_papers": len({(m.get("paper") or {}).get("title", "") for m in methods}),
@@ -249,6 +275,7 @@ def build_payload(papers: dict, state: dict, candidates: list[dict]) -> dict:
                 "found_at": c.get("found_at"),
                 "keywords": c.get("matched_keywords") or [],
                 "venue_hint": c.get("venue_hint") or "",
+                "tracks": c.get("tracks") or ["ov"],
             }
             for c in pending[:40]
         ],
@@ -269,7 +296,8 @@ def write_outputs(payload: dict) -> None:
     if SITE.exists():
         shutil.rmtree(SITE)
     SITE.mkdir(parents=True)
-    shutil.copy2(ROOT / "index.html", SITE / "index.html")
+    for page in ("index.html", "multiview.html"):
+        shutil.copy2(ROOT / page, SITE / page)
     ignore = shutil.ignore_patterns("._*", ".DS_Store", "__pycache__", "*.pyc")
     shutil.copytree(ROOT / "assets", SITE / "assets", ignore=ignore)
     (SITE / "data").mkdir()

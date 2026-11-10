@@ -1,7 +1,7 @@
 /* 本文件由 scripts/build.py 生成，请勿手工编辑。 */
 window.OV3D_DATA = {
   "schema_version": 1,
-  "generated_at": "2026-11-09 18:02",
+  "generated_at": "2026-11-10 09:42",
   "data_updated_at": "2026-11-09",
   "last_checked": "2026-11-09 18:01",
   "next_check": "2026-11-10 09:00",
@@ -83,7 +83,19 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg + SEEM",
+        "correspondence": "点-像素投影 + 超点",
+        "fusion": "不确定度加权的超点聚合",
+        "stage_3d": "3d_distill",
+        "student_3d": "冻结 3D backbone + 适配器",
+        "variant_note": "SAS* 特征；论文声明不使用耗时自蒸馏"
+      }
     },
     {
       "id": "sas-stage2",
@@ -143,7 +155,19 @@ window.OV3D_DATA = {
       "added_at": "2026-11-09",
       "tags": [
         "stage2"
-      ]
+      ],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg + SEEM",
+        "correspondence": "点-像素投影 + 超点",
+        "fusion": "多教师能力加权的特征融合",
+        "stage_3d": "self_distill",
+        "student_3d": "3D 学生网络（原论文）",
+        "variant_note": "stage2 为最终模型；stage1 为 59.2 / 45.4 / 46.3"
+      }
     },
     {
       "id": "sas-stage1",
@@ -203,6 +227,9 @@ window.OV3D_DATA = {
       "added_at": "2026-11-09",
       "tags": [
         "stage1"
+      ],
+      "tracks": [
+        "ov"
       ]
     },
     {
@@ -260,7 +287,19 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg",
+        "correspondence": "点-像素投影 + 多视角可见性",
+        "fusion": "多视角特征均值 + 2D-3D logits 集成",
+        "stage_3d": "2d3d_ensemble",
+        "student_3d": "MinkowskiNet（3D 分支）",
+        "variant_note": "LSeg 集成；OpenSeg 集成见同页另一行，3D distill 见总榜"
+      }
     },
     {
       "id": "openscene-os-ensemble",
@@ -317,7 +356,19 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "OpenSeg",
+        "correspondence": "点-像素投影 + 多视角可见性",
+        "fusion": "多视角特征均值 + 2D-3D logits 集成",
+        "stage_3d": "2d3d_ensemble",
+        "student_3d": "MinkowskiNet（3D 分支）",
+        "variant_note": "OpenSeg 集成；nuScenes 优于 LSeg 变体"
+      }
     },
     {
       "id": "openscene-ls-3d",
@@ -367,7 +418,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "openscene-os-3d",
@@ -417,7 +471,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "ov3d",
@@ -471,7 +528,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "pgov3d",
@@ -509,7 +569,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "geoze",
@@ -550,7 +613,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "ggsd",
@@ -602,7 +668,19 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg",
+        "correspondence": "点-像素投影",
+        "fusion": "几何引导的像素-点蒸馏",
+        "stage_3d": "self_distill",
+        "student_3d": "3D 学生网络（原论文）",
+        "variant_note": "最终模型；2D 投影基线 50.0 / 32.3 未单列"
+      }
     },
     {
       "id": "cua-o3d",
@@ -650,7 +728,19 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg + DINOv2 + Stable Diffusion",
+        "correspondence": "点-像素投影",
+        "fusion": "跨模态不确定度聚合",
+        "stage_3d": "2d3d_ensemble",
+        "student_3d": "3D 分支 + 2D3D 集成（原论文）",
+        "variant_note": "2D3D 变体；3D 变体为 54.1 / 41.3，不单列"
+      }
     },
     {
       "id": "dma-os",
@@ -702,7 +792,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "diff2scene",
@@ -747,7 +840,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "clip-fo3d",
@@ -785,7 +881,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "clip2scene",
@@ -823,7 +922,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "pla",
@@ -861,7 +963,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "geopurify",
@@ -908,7 +1013,19 @@ window.OV3D_DATA = {
       "added_at": "2026-11-09",
       "tags": [
         "1.5% labels"
-      ]
+      ],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg",
+        "correspondence": "点-像素投影 + 几何关系",
+        "fusion": "几何引导池化 / 关系蒸馏",
+        "stage_3d": "few_label",
+        "student_3d": "3D 学生网络（原论文）",
+        "variant_note": "约 1.5% 三维标签，仅作参考，不参与排名"
+      }
     },
     {
       "id": "mseg",
@@ -960,7 +1077,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "minkowskinet",
@@ -1014,7 +1134,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "ptv3",
@@ -1059,7 +1182,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "mix3d",
@@ -1097,7 +1223,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "vmnet",
@@ -1142,7 +1271,10 @@ window.OV3D_DATA = {
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     }
   ],
   "ranks": {
@@ -1195,6 +1327,501 @@ window.OV3D_DATA = {
     "nuscenes": 50.3,
     "matterport3d": 51.9
   },
+  "multi_view": {
+    "methods": [
+      {
+        "id": "geoguide",
+        "method": "GeoGuide",
+        "group": "open_vocab",
+        "supervision": "zero_shot",
+        "paper": {
+          "title": "GeoGuide: Hierarchical Geometric Guidance for Open-Vocabulary 3D Semantic Segmentation",
+          "authors": [
+            "Tao et al."
+          ],
+          "year": 2026,
+          "venue": "CVPR 2026",
+          "venue_type": "conference",
+          "arxiv_id": "2603.26260",
+          "doi": null,
+          "url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Tao_GeoGuide_Hierarchical_Geometric_Guidance_for_Open-Vocabulary_3D_Semantic_Segmentation_CVPR_2026_paper.pdf",
+          "code_url": null,
+          "open_source": "unknown"
+        },
+        "protocol": {
+          "family": "3d_only",
+          "text_encoder": "LSeg+SEEM（SAS* 特征）",
+          "notes": "纯 3D 推理；按论文声明不使用耗时自蒸馏，使用与 SAS 相同的 2D 特征"
+        },
+        "results": {
+          "scannet_v2": {
+            "miou": 64.8,
+            "macc": 77.3,
+            "source": "GeoGuide, CVPR 2026, Tab.1",
+            "source_kind": "primary",
+            "locator": "Table 1, p.6"
+          },
+          "nuscenes": {
+            "miou": 50.3,
+            "macc": 74.2,
+            "source": "GeoGuide, CVPR 2026, Tab.1",
+            "source_kind": "primary",
+            "locator": "Table 1, p.6"
+          },
+          "matterport3d": {
+            "miou": 51.9,
+            "macc": 66.3,
+            "source": "GeoGuide, CVPR 2026, Tab.1",
+            "source_kind": "primary",
+            "locator": "Table 1, p.6"
+          }
+        },
+        "verified": true,
+        "verified_at": "2026-11-09",
+        "added_at": "2026-11-09",
+        "tags": [],
+        "tracks": [
+          "ov",
+          "multi_view"
+        ],
+        "mv": {
+          "teacher_2d": "LSeg + SEEM",
+          "correspondence": "点-像素投影 + 超点",
+          "fusion": "不确定度加权的超点聚合",
+          "stage_3d": "3d_distill",
+          "student_3d": "冻结 3D backbone + 适配器",
+          "variant_note": "SAS* 特征；论文声明不使用耗时自蒸馏"
+        }
+      },
+      {
+        "id": "sas-stage2",
+        "method": "SAS (stage2)",
+        "group": "open_vocab",
+        "supervision": "zero_shot",
+        "paper": {
+          "title": "SAS: Segment Any 3D Scene with Integrated 2D Priors",
+          "authors": [
+            "Zhuoyuan Li",
+            "Jiahao Lu",
+            "Jiacheng Deng",
+            "Hanzhi Chang",
+            "Lifan Wu",
+            "Yanzhe Liang",
+            "Tianzhu Zhang"
+          ],
+          "year": 2025,
+          "venue": "ICCV 2025",
+          "venue_type": "conference",
+          "arxiv_id": "2503.08512",
+          "doi": null,
+          "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Li_SAS_Segment_Any_3D_Scene_with_Integrated_2D_Priors_ICCV_2025_paper.html",
+          "code_url": "https://github.com/peoplelu/SAS",
+          "open_source": "yes"
+        },
+        "protocol": {
+          "family": "self_distill",
+          "text_encoder": "LSeg+SEEM",
+          "notes": "两阶段训练；stage2 为最终模型。数值转引自 GeoGuide 对照表"
+        },
+        "results": {
+          "scannet_v2": {
+            "miou": 61.9,
+            "macc": null,
+            "source": "GeoGuide, CVPR 2026, Tab.1",
+            "source_kind": "secondary",
+            "locator": "Table 1, p.6"
+          },
+          "nuscenes": {
+            "miou": 47.5,
+            "macc": null,
+            "source": "GeoGuide, CVPR 2026, Tab.1",
+            "source_kind": "secondary",
+            "locator": "Table 1, p.6"
+          },
+          "matterport3d": {
+            "miou": 48.6,
+            "macc": null,
+            "source": "GeoGuide, CVPR 2026, Tab.1",
+            "source_kind": "secondary",
+            "locator": "Table 1, p.6"
+          }
+        },
+        "verified": true,
+        "verified_at": "2026-11-09",
+        "added_at": "2026-11-09",
+        "tags": [
+          "stage2"
+        ],
+        "tracks": [
+          "ov",
+          "multi_view"
+        ],
+        "mv": {
+          "teacher_2d": "LSeg + SEEM",
+          "correspondence": "点-像素投影 + 超点",
+          "fusion": "多教师能力加权的特征融合",
+          "stage_3d": "self_distill",
+          "student_3d": "3D 学生网络（原论文）",
+          "variant_note": "stage2 为最终模型；stage1 为 59.2 / 45.4 / 46.3"
+        }
+      },
+      {
+        "id": "openscene-ls-ensemble",
+        "method": "OpenScene (LS, 2D-3D Ens.)",
+        "group": "open_vocab",
+        "supervision": "zero_shot",
+        "paper": {
+          "title": "OpenScene: 3D Scene Understanding with Open Vocabularies",
+          "authors": [
+            "Songyou Peng",
+            "Kyle Genova",
+            "Chiyu Jiang",
+            "Andrea Tagliasacchi",
+            "Marc Pollefeys",
+            "Thomas Funkhouser"
+          ],
+          "year": 2023,
+          "venue": "CVPR 2023",
+          "venue_type": "conference",
+          "arxiv_id": "2211.15654",
+          "doi": null,
+          "url": "https://openaccess.thecvf.com/content/CVPR2023/html/Peng_OpenScene_3D_Scene_Understanding_With_Open_Vocabularies_CVPR_2023_paper.html",
+          "code_url": "https://github.com/pengsongyou/openscene",
+          "open_source": "yes"
+        },
+        "protocol": {
+          "family": "2d3d_ensemble",
+          "text_encoder": "LSeg",
+          "notes": "2D-3D 集成推理，OpenScene Table 5 / Table 7 的 Ensemble 行"
+        },
+        "results": {
+          "scannet_v2": {
+            "miou": 54.2,
+            "macc": 66.6,
+            "source": "OpenScene, CVPR 2023, Tab.5",
+            "source_kind": "primary",
+            "locator": "Table 5, p.6"
+          },
+          "nuscenes": {
+            "miou": 36.7,
+            "macc": 42.7,
+            "source": "OpenScene, CVPR 2023, Tab.5",
+            "source_kind": "primary",
+            "locator": "Table 5, p.6"
+          },
+          "matterport3d": {
+            "miou": 43.4,
+            "macc": 53.5,
+            "source": "OpenScene, CVPR 2023, Tab.5",
+            "source_kind": "primary",
+            "locator": "Table 5, p.6"
+          }
+        },
+        "verified": true,
+        "verified_at": "2026-11-09",
+        "added_at": "2026-11-09",
+        "tags": [],
+        "tracks": [
+          "ov",
+          "multi_view"
+        ],
+        "mv": {
+          "teacher_2d": "LSeg",
+          "correspondence": "点-像素投影 + 多视角可见性",
+          "fusion": "多视角特征均值 + 2D-3D logits 集成",
+          "stage_3d": "2d3d_ensemble",
+          "student_3d": "MinkowskiNet（3D 分支）",
+          "variant_note": "LSeg 集成；OpenSeg 集成见同页另一行，3D distill 见总榜"
+        }
+      },
+      {
+        "id": "openscene-os-ensemble",
+        "method": "OpenScene (OS, 2D-3D Ens.)",
+        "group": "open_vocab",
+        "supervision": "zero_shot",
+        "paper": {
+          "title": "OpenScene: 3D Scene Understanding with Open Vocabularies",
+          "authors": [
+            "Songyou Peng",
+            "Kyle Genova",
+            "Chiyu Jiang",
+            "Andrea Tagliasacchi",
+            "Marc Pollefeys",
+            "Thomas Funkhouser"
+          ],
+          "year": 2023,
+          "venue": "CVPR 2023",
+          "venue_type": "conference",
+          "arxiv_id": "2211.15654",
+          "doi": null,
+          "url": "https://openaccess.thecvf.com/content/CVPR2023/html/Peng_OpenScene_3D_Scene_Understanding_With_Open_Vocabularies_CVPR_2023_paper.html",
+          "code_url": "https://github.com/pengsongyou/openscene",
+          "open_source": "yes"
+        },
+        "protocol": {
+          "family": "2d3d_ensemble",
+          "text_encoder": "OpenSeg",
+          "notes": "2D-3D 集成推理，OpenScene Table 5 / Table 7 的 Ensemble 行"
+        },
+        "results": {
+          "scannet_v2": {
+            "miou": 47.5,
+            "macc": 70.7,
+            "source": "OpenScene, CVPR 2023, Tab.5",
+            "source_kind": "primary",
+            "locator": "Table 5, p.6"
+          },
+          "nuscenes": {
+            "miou": 42.1,
+            "macc": 61.8,
+            "source": "OpenScene, CVPR 2023, Tab.5",
+            "source_kind": "primary",
+            "locator": "Table 5, p.6"
+          },
+          "matterport3d": {
+            "miou": 42.6,
+            "macc": 59.2,
+            "source": "OpenScene, CVPR 2023, Tab.5",
+            "source_kind": "primary",
+            "locator": "Table 5, p.6"
+          }
+        },
+        "verified": true,
+        "verified_at": "2026-11-09",
+        "added_at": "2026-11-09",
+        "tags": [],
+        "tracks": [
+          "ov",
+          "multi_view"
+        ],
+        "mv": {
+          "teacher_2d": "OpenSeg",
+          "correspondence": "点-像素投影 + 多视角可见性",
+          "fusion": "多视角特征均值 + 2D-3D logits 集成",
+          "stage_3d": "2d3d_ensemble",
+          "student_3d": "MinkowskiNet（3D 分支）",
+          "variant_note": "OpenSeg 集成；nuScenes 优于 LSeg 变体"
+        }
+      },
+      {
+        "id": "ggsd",
+        "method": "GGSD",
+        "group": "open_vocab",
+        "supervision": "zero_shot",
+        "paper": {
+          "title": "Open Vocabulary 3D Scene Understanding via Geometry Guided Self-Distillation",
+          "authors": [
+            "P. Wang et al."
+          ],
+          "year": 2024,
+          "venue": "ECCV 2024",
+          "venue_type": "conference",
+          "arxiv_id": "2407.13362",
+          "doi": null,
+          "url": "https://arxiv.org/abs/2407.13362",
+          "code_url": "https://github.com/Wang-pengfei/GGSD",
+          "open_source": "yes"
+        },
+        "protocol": {
+          "family": "self_distill",
+          "text_encoder": "LSeg",
+          "notes": "几何引导自蒸馏；Matterport3D 取自原论文 Matterport21 设置"
+        },
+        "results": {
+          "scannet_v2": {
+            "miou": 56.5,
+            "macc": 68.6,
+            "source": "GGSD, ECCV 2024, Tab.6",
+            "source_kind": "primary",
+            "locator": "Table 6"
+          },
+          "nuscenes": {
+            "miou": 46.1,
+            "macc": 59.2,
+            "source": "GGSD, ECCV 2024, Tab.6",
+            "source_kind": "primary",
+            "locator": "Table 6"
+          },
+          "matterport3d": {
+            "miou": 40.1,
+            "macc": 54.4,
+            "source": "GGSD, ECCV 2024, Tab.8",
+            "source_kind": "primary",
+            "locator": "Table 8"
+          }
+        },
+        "verified": true,
+        "verified_at": "2026-11-09",
+        "added_at": "2026-11-09",
+        "tags": [],
+        "tracks": [
+          "ov",
+          "multi_view"
+        ],
+        "mv": {
+          "teacher_2d": "LSeg",
+          "correspondence": "点-像素投影",
+          "fusion": "几何引导的像素-点蒸馏",
+          "stage_3d": "self_distill",
+          "student_3d": "3D 学生网络（原论文）",
+          "variant_note": "最终模型；2D 投影基线 50.0 / 32.3 未单列"
+        }
+      },
+      {
+        "id": "cua-o3d",
+        "method": "CUA-O3D",
+        "group": "open_vocab",
+        "supervision": "zero_shot",
+        "paper": {
+          "title": "Cross-Modal and Uncertainty-Aware Agglomeration for Open-Vocabulary 3D Scene Understanding",
+          "authors": [
+            "J. Li",
+            "C. Saltori",
+            "F. Poiesi",
+            "N. Sebe"
+          ],
+          "year": 2025,
+          "venue": "CVPR 2025",
+          "venue_type": "conference",
+          "arxiv_id": "2503.16707",
+          "doi": null,
+          "url": "https://arxiv.org/abs/2503.16707",
+          "code_url": "https://github.com/TyroneLi/CUA_O3D",
+          "open_source": "yes"
+        },
+        "protocol": {
+          "family": "2d3d_ensemble",
+          "text_encoder": "LSeg + DINOv2 + Stable Diffusion",
+          "notes": "2D3D 变体；原论文未报告 nuScenes"
+        },
+        "results": {
+          "scannet_v2": {
+            "miou": 55.3,
+            "macc": 65.6,
+            "source": "CUA-O3D, CVPR 2025, Tab.12",
+            "source_kind": "primary",
+            "locator": "Table 12"
+          },
+          "matterport3d": {
+            "miou": 42.2,
+            "macc": 50.9,
+            "source": "CUA-O3D, CVPR 2025, Tab.12",
+            "source_kind": "primary",
+            "locator": "Table 12"
+          }
+        },
+        "verified": true,
+        "verified_at": "2026-11-09",
+        "added_at": "2026-11-09",
+        "tags": [],
+        "tracks": [
+          "ov",
+          "multi_view"
+        ],
+        "mv": {
+          "teacher_2d": "LSeg + DINOv2 + Stable Diffusion",
+          "correspondence": "点-像素投影",
+          "fusion": "跨模态不确定度聚合",
+          "stage_3d": "2d3d_ensemble",
+          "student_3d": "3D 分支 + 2D3D 集成（原论文）",
+          "variant_note": "2D3D 变体；3D 变体为 54.1 / 41.3，不单列"
+        }
+      },
+      {
+        "id": "geopurify",
+        "method": "GeoPurify",
+        "group": "few_label",
+        "supervision": "few_label",
+        "paper": {
+          "title": "GeoPurify: A Data-Efficient Geometric Distillation Framework for Open-Vocabulary 3D Segmentation",
+          "authors": [
+            "GeoPurify authors"
+          ],
+          "year": 2026,
+          "venue": "ICLR 2026",
+          "venue_type": "conference",
+          "arxiv_id": "2510.02186",
+          "doi": null,
+          "url": "https://arxiv.org/abs/2510.02186",
+          "code_url": "https://github.com/tj12323/GeoPurify",
+          "open_source": "yes"
+        },
+        "protocol": {
+          "family": "3d_only",
+          "text_encoder": "LSeg（按原论文）",
+          "notes": "约 1.5% 三维语义标签，不是零样本；仅作参考，不参与开放词汇排名"
+        },
+        "results": {
+          "scannet_v2": {
+            "miou": 55.1,
+            "macc": 72.5,
+            "source": "GeoPurify, ICLR 2026, Tab.8",
+            "source_kind": "primary",
+            "locator": "Table 8"
+          },
+          "matterport3d": {
+            "miou": 40.2,
+            "macc": 62.4,
+            "source": "GeoPurify, ICLR 2026, Tab.8",
+            "source_kind": "primary",
+            "locator": "Table 8"
+          }
+        },
+        "verified": true,
+        "verified_at": "2026-11-09",
+        "added_at": "2026-11-09",
+        "tags": [
+          "1.5% labels"
+        ],
+        "tracks": [
+          "ov",
+          "multi_view"
+        ],
+        "mv": {
+          "teacher_2d": "LSeg",
+          "correspondence": "点-像素投影 + 几何关系",
+          "fusion": "几何引导池化 / 关系蒸馏",
+          "stage_3d": "few_label",
+          "student_3d": "3D 学生网络（原论文）",
+          "variant_note": "约 1.5% 三维标签，仅作参考，不参与排名"
+        }
+      }
+    ],
+    "ranks": {
+      "scannet_v2": {
+        "geoguide": 1,
+        "sas-stage2": 2,
+        "ggsd": 3,
+        "cua-o3d": 4,
+        "openscene-ls-ensemble": 5,
+        "openscene-os-ensemble": 6
+      },
+      "nuscenes": {
+        "geoguide": 1,
+        "sas-stage2": 2,
+        "ggsd": 3,
+        "openscene-os-ensemble": 4,
+        "openscene-ls-ensemble": 5
+      },
+      "matterport3d": {
+        "geoguide": 1,
+        "sas-stage2": 2,
+        "openscene-ls-ensemble": 3,
+        "openscene-os-ensemble": 4,
+        "cua-o3d": 5,
+        "ggsd": 6
+      }
+    },
+    "best": {
+      "scannet_v2": 64.8,
+      "nuscenes": 50.3,
+      "matterport3d": 51.9
+    },
+    "counts": {
+      "methods": 7,
+      "pending": 0
+    }
+  },
   "counts": {
     "papers": 23,
     "unique_papers": 19,
@@ -1207,6 +1834,11 @@ window.OV3D_DATA = {
   },
   "pending": [],
   "changelog": [
+    {
+      "at": "2026-11-10 09:45",
+      "kind": "page",
+      "summary": "新增「多视角 2D→3D」子榜单：OpenScene、SAS、GeoGuide、GGSD、CUA-O3D 与 GeoPurify 参考组，补充 2D 教师/对应/融合/3D 阶段字段。"
+    },
     {
       "at": "2026-11-09 17:50",
       "kind": "init",

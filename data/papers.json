@@ -2,9 +2,24 @@
   "schema_version": 1,
   "updated_at": "2026-11-09",
   "benchmarks": [
-    {"key": "scannet_v2", "label": "ScanNet v2", "classes": 20, "split": "val"},
-    {"key": "nuscenes", "label": "nuScenes", "classes": 16, "split": "val"},
-    {"key": "matterport3d", "label": "Matterport3D", "classes": 21, "split": "test"}
+    {
+      "key": "scannet_v2",
+      "label": "ScanNet v2",
+      "classes": 20,
+      "split": "val"
+    },
+    {
+      "key": "nuscenes",
+      "label": "nuScenes",
+      "classes": 16,
+      "split": "val"
+    },
+    {
+      "key": "matterport3d",
+      "label": "Matterport3D",
+      "classes": 21,
+      "split": "test"
+    }
   ],
   "methods": [
     {
@@ -14,7 +29,9 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "GeoGuide: Hierarchical Geometric Guidance for Open-Vocabulary 3D Semantic Segmentation",
-        "authors": ["Tao et al."],
+        "authors": [
+          "Tao et al."
+        ],
         "year": 2026,
         "venue": "CVPR 2026",
         "venue_type": "conference",
@@ -30,14 +47,44 @@
         "notes": "纯 3D 推理；按论文声明不使用耗时自蒸馏，使用与 SAS 相同的 2D 特征"
       },
       "results": {
-        "scannet_v2": {"miou": 64.8, "macc": 77.3, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "primary", "locator": "Table 1, p.6"},
-        "nuscenes": {"miou": 50.3, "macc": 74.2, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "primary", "locator": "Table 1, p.6"},
-        "matterport3d": {"miou": 51.9, "macc": 66.3, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "primary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 64.8,
+          "macc": 77.3,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "primary",
+          "locator": "Table 1, p.6"
+        },
+        "nuscenes": {
+          "miou": 50.3,
+          "macc": 74.2,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "primary",
+          "locator": "Table 1, p.6"
+        },
+        "matterport3d": {
+          "miou": 51.9,
+          "macc": 66.3,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "primary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg + SEEM",
+        "correspondence": "点-像素投影 + 超点",
+        "fusion": "不确定度加权的超点聚合",
+        "stage_3d": "3d_distill",
+        "student_3d": "冻结 3D backbone + 适配器",
+        "variant_note": "SAS* 特征；论文声明不使用耗时自蒸馏"
+      }
     },
     {
       "id": "sas-stage2",
@@ -46,7 +93,15 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "SAS: Segment Any 3D Scene with Integrated 2D Priors",
-        "authors": ["Zhuoyuan Li", "Jiahao Lu", "Jiacheng Deng", "Hanzhi Chang", "Lifan Wu", "Yanzhe Liang", "Tianzhu Zhang"],
+        "authors": [
+          "Zhuoyuan Li",
+          "Jiahao Lu",
+          "Jiacheng Deng",
+          "Hanzhi Chang",
+          "Lifan Wu",
+          "Yanzhe Liang",
+          "Tianzhu Zhang"
+        ],
         "year": 2025,
         "venue": "ICCV 2025",
         "venue_type": "conference",
@@ -62,14 +117,46 @@
         "notes": "两阶段训练；stage2 为最终模型。数值转引自 GeoGuide 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 61.9, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "nuscenes": {"miou": 47.5, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "matterport3d": {"miou": 48.6, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 61.9,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "nuscenes": {
+          "miou": 47.5,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "matterport3d": {
+          "miou": 48.6,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": ["stage2"]
+      "tags": [
+        "stage2"
+      ],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg + SEEM",
+        "correspondence": "点-像素投影 + 超点",
+        "fusion": "多教师能力加权的特征融合",
+        "stage_3d": "self_distill",
+        "student_3d": "3D 学生网络（原论文）",
+        "variant_note": "stage2 为最终模型；stage1 为 59.2 / 45.4 / 46.3"
+      }
     },
     {
       "id": "sas-stage1",
@@ -78,7 +165,15 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "SAS: Segment Any 3D Scene with Integrated 2D Priors",
-        "authors": ["Zhuoyuan Li", "Jiahao Lu", "Jiacheng Deng", "Hanzhi Chang", "Lifan Wu", "Yanzhe Liang", "Tianzhu Zhang"],
+        "authors": [
+          "Zhuoyuan Li",
+          "Jiahao Lu",
+          "Jiacheng Deng",
+          "Hanzhi Chang",
+          "Lifan Wu",
+          "Yanzhe Liang",
+          "Tianzhu Zhang"
+        ],
         "year": 2025,
         "venue": "ICCV 2025",
         "venue_type": "conference",
@@ -94,14 +189,37 @@
         "notes": "第一阶段模型；数值转引自 GeoGuide 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 59.2, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "nuscenes": {"miou": 45.4, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "matterport3d": {"miou": 46.3, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 59.2,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "nuscenes": {
+          "miou": 45.4,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "matterport3d": {
+          "miou": 46.3,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": ["stage1"]
+      "tags": [
+        "stage1"
+      ],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "openscene-ls-ensemble",
@@ -110,7 +228,14 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "OpenScene: 3D Scene Understanding with Open Vocabularies",
-        "authors": ["Songyou Peng", "Kyle Genova", "Chiyu Jiang", "Andrea Tagliasacchi", "Marc Pollefeys", "Thomas Funkhouser"],
+        "authors": [
+          "Songyou Peng",
+          "Kyle Genova",
+          "Chiyu Jiang",
+          "Andrea Tagliasacchi",
+          "Marc Pollefeys",
+          "Thomas Funkhouser"
+        ],
         "year": 2023,
         "venue": "CVPR 2023",
         "venue_type": "conference",
@@ -126,14 +251,44 @@
         "notes": "2D-3D 集成推理，OpenScene Table 5 / Table 7 的 Ensemble 行"
       },
       "results": {
-        "scannet_v2": {"miou": 54.2, "macc": 66.6, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "primary", "locator": "Table 5, p.6"},
-        "nuscenes": {"miou": 36.7, "macc": 42.7, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "primary", "locator": "Table 5, p.6"},
-        "matterport3d": {"miou": 43.4, "macc": 53.5, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "primary", "locator": "Table 5, p.6"}
+        "scannet_v2": {
+          "miou": 54.2,
+          "macc": 66.6,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "primary",
+          "locator": "Table 5, p.6"
+        },
+        "nuscenes": {
+          "miou": 36.7,
+          "macc": 42.7,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "primary",
+          "locator": "Table 5, p.6"
+        },
+        "matterport3d": {
+          "miou": 43.4,
+          "macc": 53.5,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "primary",
+          "locator": "Table 5, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg",
+        "correspondence": "点-像素投影 + 多视角可见性",
+        "fusion": "多视角特征均值 + 2D-3D logits 集成",
+        "stage_3d": "2d3d_ensemble",
+        "student_3d": "MinkowskiNet（3D 分支）",
+        "variant_note": "LSeg 集成；OpenSeg 集成见同页另一行，3D distill 见总榜"
+      }
     },
     {
       "id": "openscene-os-ensemble",
@@ -142,7 +297,14 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "OpenScene: 3D Scene Understanding with Open Vocabularies",
-        "authors": ["Songyou Peng", "Kyle Genova", "Chiyu Jiang", "Andrea Tagliasacchi", "Marc Pollefeys", "Thomas Funkhouser"],
+        "authors": [
+          "Songyou Peng",
+          "Kyle Genova",
+          "Chiyu Jiang",
+          "Andrea Tagliasacchi",
+          "Marc Pollefeys",
+          "Thomas Funkhouser"
+        ],
         "year": 2023,
         "venue": "CVPR 2023",
         "venue_type": "conference",
@@ -158,14 +320,44 @@
         "notes": "2D-3D 集成推理，OpenScene Table 5 / Table 7 的 Ensemble 行"
       },
       "results": {
-        "scannet_v2": {"miou": 47.5, "macc": 70.7, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "primary", "locator": "Table 5, p.6"},
-        "nuscenes": {"miou": 42.1, "macc": 61.8, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "primary", "locator": "Table 5, p.6"},
-        "matterport3d": {"miou": 42.6, "macc": 59.2, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "primary", "locator": "Table 5, p.6"}
+        "scannet_v2": {
+          "miou": 47.5,
+          "macc": 70.7,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "primary",
+          "locator": "Table 5, p.6"
+        },
+        "nuscenes": {
+          "miou": 42.1,
+          "macc": 61.8,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "primary",
+          "locator": "Table 5, p.6"
+        },
+        "matterport3d": {
+          "miou": 42.6,
+          "macc": 59.2,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "primary",
+          "locator": "Table 5, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "OpenSeg",
+        "correspondence": "点-像素投影 + 多视角可见性",
+        "fusion": "多视角特征均值 + 2D-3D logits 集成",
+        "stage_3d": "2d3d_ensemble",
+        "student_3d": "MinkowskiNet（3D 分支）",
+        "variant_note": "OpenSeg 集成；nuScenes 优于 LSeg 变体"
+      }
     },
     {
       "id": "openscene-ls-3d",
@@ -174,7 +366,14 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "OpenScene: 3D Scene Understanding with Open Vocabularies",
-        "authors": ["Songyou Peng", "Kyle Genova", "Chiyu Jiang", "Andrea Tagliasacchi", "Marc Pollefeys", "Thomas Funkhouser"],
+        "authors": [
+          "Songyou Peng",
+          "Kyle Genova",
+          "Chiyu Jiang",
+          "Andrea Tagliasacchi",
+          "Marc Pollefeys",
+          "Thomas Funkhouser"
+        ],
         "year": 2023,
         "venue": "CVPR 2023",
         "venue_type": "conference",
@@ -190,13 +389,28 @@
         "notes": "3D 蒸馏模型，推理仅 3D；论文未报告 nuScenes"
       },
       "results": {
-        "scannet_v2": {"miou": 52.9, "macc": 63.2, "source": "OpenScene, CVPR 2023, Tab.7", "source_kind": "primary", "locator": "Table 7, p.6"},
-        "matterport3d": {"miou": 41.9, "macc": 51.2, "source": "OpenScene, CVPR 2023, Tab.7", "source_kind": "primary", "locator": "Table 7, p.6"}
+        "scannet_v2": {
+          "miou": 52.9,
+          "macc": 63.2,
+          "source": "OpenScene, CVPR 2023, Tab.7",
+          "source_kind": "primary",
+          "locator": "Table 7, p.6"
+        },
+        "matterport3d": {
+          "miou": 41.9,
+          "macc": 51.2,
+          "source": "OpenScene, CVPR 2023, Tab.7",
+          "source_kind": "primary",
+          "locator": "Table 7, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "openscene-os-3d",
@@ -205,7 +419,14 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "OpenScene: 3D Scene Understanding with Open Vocabularies",
-        "authors": ["Songyou Peng", "Kyle Genova", "Chiyu Jiang", "Andrea Tagliasacchi", "Marc Pollefeys", "Thomas Funkhouser"],
+        "authors": [
+          "Songyou Peng",
+          "Kyle Genova",
+          "Chiyu Jiang",
+          "Andrea Tagliasacchi",
+          "Marc Pollefeys",
+          "Thomas Funkhouser"
+        ],
         "year": 2023,
         "venue": "CVPR 2023",
         "venue_type": "conference",
@@ -221,13 +442,28 @@
         "notes": "3D 蒸馏模型，推理仅 3D；论文未报告 nuScenes"
       },
       "results": {
-        "scannet_v2": {"miou": 46.0, "macc": 66.3, "source": "OpenScene, CVPR 2023, Tab.7", "source_kind": "primary", "locator": "Table 7, p.6"},
-        "matterport3d": {"miou": 41.3, "macc": 55.1, "source": "OpenScene, CVPR 2023, Tab.7", "source_kind": "primary", "locator": "Table 7, p.6"}
+        "scannet_v2": {
+          "miou": 46.0,
+          "macc": 66.3,
+          "source": "OpenScene, CVPR 2023, Tab.7",
+          "source_kind": "primary",
+          "locator": "Table 7, p.6"
+        },
+        "matterport3d": {
+          "miou": 41.3,
+          "macc": 55.1,
+          "source": "OpenScene, CVPR 2023, Tab.7",
+          "source_kind": "primary",
+          "locator": "Table 7, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "ov3d",
@@ -236,7 +472,11 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "Open-Vocabulary 3D Semantic Segmentation with Foundation Models",
-        "authors": ["L. Jiang", "S. Shi", "B. Schiele"],
+        "authors": [
+          "L. Jiang",
+          "S. Shi",
+          "B. Schiele"
+        ],
         "year": 2024,
         "venue": "CVPR 2024",
         "venue_type": "conference",
@@ -252,14 +492,35 @@
         "notes": "基础模型驱动的 3D 开放词汇分割；数值转引自 GeoGuide 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 57.3, "macc": 72.9, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "nuscenes": {"miou": 44.6, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "matterport3d": {"miou": 45.8, "macc": 62.4, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 57.3,
+          "macc": 72.9,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "nuscenes": {
+          "miou": 44.6,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "matterport3d": {
+          "miou": 45.8,
+          "macc": 62.4,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "pgov3d",
@@ -268,7 +529,9 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "PGOV3D: Open-Vocabulary 3D Semantic Segmentation with Partial-to-Global Curriculum",
-        "authors": ["S. Zhang et al."],
+        "authors": [
+          "S. Zhang et al."
+        ],
         "year": 2025,
         "venue": "ACM MM 2025",
         "venue_type": "conference",
@@ -284,12 +547,21 @@
         "notes": "部分到全局课程学习；原论文仅报告 ScanNet"
       },
       "results": {
-        "scannet_v2": {"miou": 59.5, "macc": 73.2, "source": "PGOV3D, ACM MM 2025, Tab.5", "source_kind": "primary", "locator": "Table 5"}
+        "scannet_v2": {
+          "miou": 59.5,
+          "macc": 73.2,
+          "source": "PGOV3D, ACM MM 2025, Tab.5",
+          "source_kind": "primary",
+          "locator": "Table 5"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "geoze",
@@ -298,7 +570,12 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "Geometrically-driven Aggregation for Zero-shot 3D Point Cloud Understanding",
-        "authors": ["G. Mei", "L. Riz", "Y. Wang", "F. Poiesi"],
+        "authors": [
+          "G. Mei",
+          "L. Riz",
+          "Y. Wang",
+          "F. Poiesi"
+        ],
         "year": 2024,
         "venue": "CVPR 2024",
         "venue_type": "conference",
@@ -314,12 +591,21 @@
         "notes": "几何驱动的零样本聚合；数值转引自 GeoGuide 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 55.8, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 55.8,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "ggsd",
@@ -328,7 +614,9 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "Open Vocabulary 3D Scene Understanding via Geometry Guided Self-Distillation",
-        "authors": ["P. Wang et al."],
+        "authors": [
+          "P. Wang et al."
+        ],
         "year": 2024,
         "venue": "ECCV 2024",
         "venue_type": "conference",
@@ -344,14 +632,44 @@
         "notes": "几何引导自蒸馏；Matterport3D 取自原论文 Matterport21 设置"
       },
       "results": {
-        "scannet_v2": {"miou": 56.5, "macc": 68.6, "source": "GGSD, ECCV 2024, Tab.6", "source_kind": "primary", "locator": "Table 6"},
-        "nuscenes": {"miou": 46.1, "macc": 59.2, "source": "GGSD, ECCV 2024, Tab.6", "source_kind": "primary", "locator": "Table 6"},
-        "matterport3d": {"miou": 40.1, "macc": 54.4, "source": "GGSD, ECCV 2024, Tab.8", "source_kind": "primary", "locator": "Table 8"}
+        "scannet_v2": {
+          "miou": 56.5,
+          "macc": 68.6,
+          "source": "GGSD, ECCV 2024, Tab.6",
+          "source_kind": "primary",
+          "locator": "Table 6"
+        },
+        "nuscenes": {
+          "miou": 46.1,
+          "macc": 59.2,
+          "source": "GGSD, ECCV 2024, Tab.6",
+          "source_kind": "primary",
+          "locator": "Table 6"
+        },
+        "matterport3d": {
+          "miou": 40.1,
+          "macc": 54.4,
+          "source": "GGSD, ECCV 2024, Tab.8",
+          "source_kind": "primary",
+          "locator": "Table 8"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg",
+        "correspondence": "点-像素投影",
+        "fusion": "几何引导的像素-点蒸馏",
+        "stage_3d": "self_distill",
+        "student_3d": "3D 学生网络（原论文）",
+        "variant_note": "最终模型；2D 投影基线 50.0 / 32.3 未单列"
+      }
     },
     {
       "id": "cua-o3d",
@@ -360,7 +678,12 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "Cross-Modal and Uncertainty-Aware Agglomeration for Open-Vocabulary 3D Scene Understanding",
-        "authors": ["J. Li", "C. Saltori", "F. Poiesi", "N. Sebe"],
+        "authors": [
+          "J. Li",
+          "C. Saltori",
+          "F. Poiesi",
+          "N. Sebe"
+        ],
         "year": 2025,
         "venue": "CVPR 2025",
         "venue_type": "conference",
@@ -376,13 +699,37 @@
         "notes": "2D3D 变体；原论文未报告 nuScenes"
       },
       "results": {
-        "scannet_v2": {"miou": 55.3, "macc": 65.6, "source": "CUA-O3D, CVPR 2025, Tab.12", "source_kind": "primary", "locator": "Table 12"},
-        "matterport3d": {"miou": 42.2, "macc": 50.9, "source": "CUA-O3D, CVPR 2025, Tab.12", "source_kind": "primary", "locator": "Table 12"}
+        "scannet_v2": {
+          "miou": 55.3,
+          "macc": 65.6,
+          "source": "CUA-O3D, CVPR 2025, Tab.12",
+          "source_kind": "primary",
+          "locator": "Table 12"
+        },
+        "matterport3d": {
+          "miou": 42.2,
+          "macc": 50.9,
+          "source": "CUA-O3D, CVPR 2025, Tab.12",
+          "source_kind": "primary",
+          "locator": "Table 12"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg + DINOv2 + Stable Diffusion",
+        "correspondence": "点-像素投影",
+        "fusion": "跨模态不确定度聚合",
+        "stage_3d": "2d3d_ensemble",
+        "student_3d": "3D 分支 + 2D3D 集成（原论文）",
+        "variant_note": "2D3D 变体；3D 变体为 54.1 / 41.3，不单列"
+      }
     },
     {
       "id": "dma-os",
@@ -391,7 +738,9 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "Dense Multimodal Alignment for Open-Vocabulary 3D Scene Understanding",
-        "authors": ["R. Li et al."],
+        "authors": [
+          "R. Li et al."
+        ],
         "year": 2024,
         "venue": "ECCV 2024",
         "venue_type": "conference",
@@ -407,14 +756,35 @@
         "notes": "DMA(OS) 变体；数值转引自 GeoGuide 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 53.3, "macc": 70.3, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "nuscenes": {"miou": 45.1, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "matterport3d": {"miou": 45.1, "macc": 57.6, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 53.3,
+          "macc": 70.3,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "nuscenes": {
+          "miou": 45.1,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "matterport3d": {
+          "miou": 45.1,
+          "macc": 57.6,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "diff2scene",
@@ -423,7 +793,9 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "Open-Vocabulary 3D Semantic Segmentation with Text-to-Image Diffusion Models",
-        "authors": ["X. Zhu et al."],
+        "authors": [
+          "X. Zhu et al."
+        ],
         "year": 2024,
         "venue": "ECCV 2024",
         "venue_type": "conference",
@@ -439,13 +811,28 @@
         "notes": "扩散模型文本到图像先验；数值转引自 GeoGuide 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 48.6, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "matterport3d": {"miou": 45.5, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 48.6,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "matterport3d": {
+          "miou": 45.5,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "clip-fo3d",
@@ -454,7 +841,9 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "CLIP-FO3D: Learning Free Open-world 3D Scene Representations from 2D Dense CLIP",
-        "authors": ["J. Zhang et al."],
+        "authors": [
+          "J. Zhang et al."
+        ],
         "year": 2023,
         "venue": "CVPR 2023",
         "venue_type": "conference",
@@ -470,12 +859,21 @@
         "notes": "原论文只报告 ScanNet / S3DIS"
       },
       "results": {
-        "scannet_v2": {"miou": 30.2, "macc": 49.1, "source": "CLIP-FO3D, CVPR 2023, Tab.4", "source_kind": "primary", "locator": "Table 4"}
+        "scannet_v2": {
+          "miou": 30.2,
+          "macc": 49.1,
+          "source": "CLIP-FO3D, CVPR 2023, Tab.4",
+          "source_kind": "primary",
+          "locator": "Table 4"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "clip2scene",
@@ -484,7 +882,9 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "CLIP2Scene: Towards Label-efficient 3D Scene Understanding by CLIP",
-        "authors": ["R. Chen et al."],
+        "authors": [
+          "R. Chen et al."
+        ],
         "year": 2023,
         "venue": "CVPR 2023",
         "venue_type": "conference",
@@ -500,12 +900,21 @@
         "notes": "数值转引自 GeoGuide 对照表（ScanNet 零样本设置）"
       },
       "results": {
-        "scannet_v2": {"miou": 25.1, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 25.1,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "pla",
@@ -514,7 +923,9 @@
       "supervision": "zero_shot",
       "paper": {
         "title": "PLA: Language-Driven Open-Vocabulary 3D Scene Understanding",
-        "authors": ["R. Ding et al."],
+        "authors": [
+          "R. Ding et al."
+        ],
         "year": 2023,
         "venue": "CVPR 2023",
         "venue_type": "conference",
@@ -530,12 +941,21 @@
         "notes": "数值转引自 GeoGuide 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 17.7, "macc": 33.5, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 17.7,
+          "macc": 33.5,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "geopurify",
@@ -544,7 +964,9 @@
       "supervision": "few_label",
       "paper": {
         "title": "GeoPurify: A Data-Efficient Geometric Distillation Framework for Open-Vocabulary 3D Segmentation",
-        "authors": ["GeoPurify authors"],
+        "authors": [
+          "GeoPurify authors"
+        ],
         "year": 2026,
         "venue": "ICLR 2026",
         "venue_type": "conference",
@@ -560,13 +982,39 @@
         "notes": "约 1.5% 三维语义标签，不是零样本；仅作参考，不参与开放词汇排名"
       },
       "results": {
-        "scannet_v2": {"miou": 55.1, "macc": 72.5, "source": "GeoPurify, ICLR 2026, Tab.8", "source_kind": "primary", "locator": "Table 8"},
-        "matterport3d": {"miou": 40.2, "macc": 62.4, "source": "GeoPurify, ICLR 2026, Tab.8", "source_kind": "primary", "locator": "Table 8"}
+        "scannet_v2": {
+          "miou": 55.1,
+          "macc": 72.5,
+          "source": "GeoPurify, ICLR 2026, Tab.8",
+          "source_kind": "primary",
+          "locator": "Table 8"
+        },
+        "matterport3d": {
+          "miou": 40.2,
+          "macc": 62.4,
+          "source": "GeoPurify, ICLR 2026, Tab.8",
+          "source_kind": "primary",
+          "locator": "Table 8"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": ["1.5% labels"]
+      "tags": [
+        "1.5% labels"
+      ],
+      "tracks": [
+        "ov",
+        "multi_view"
+      ],
+      "mv": {
+        "teacher_2d": "LSeg",
+        "correspondence": "点-像素投影 + 几何关系",
+        "fusion": "几何引导池化 / 关系蒸馏",
+        "stage_3d": "few_label",
+        "student_3d": "3D 学生网络（原论文）",
+        "variant_note": "约 1.5% 三维标签，仅作参考，不参与排名"
+      }
     },
     {
       "id": "mseg",
@@ -575,7 +1023,9 @@
       "supervision": "fully_supervised",
       "paper": {
         "title": "MSeg: A Composite Dataset for Multi-domain Semantic Segmentation",
-        "authors": ["J. Lambert et al."],
+        "authors": [
+          "J. Lambert et al."
+        ],
         "year": 2022,
         "venue": "CVPR 2022",
         "venue_type": "conference",
@@ -591,14 +1041,35 @@
         "notes": "监督模型投票的迁移基线，不是开放词汇方法；数值取自 OpenScene 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 45.6, "macc": 54.4, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "secondary", "locator": "Table 5, p.6"},
-        "nuscenes": {"miou": 31.0, "macc": 36.9, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "secondary", "locator": "Table 5, p.6"},
-        "matterport3d": {"miou": 33.4, "macc": 39.0, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "secondary", "locator": "Table 5, p.6"}
+        "scannet_v2": {
+          "miou": 45.6,
+          "macc": 54.4,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "secondary",
+          "locator": "Table 5, p.6"
+        },
+        "nuscenes": {
+          "miou": 31.0,
+          "macc": 36.9,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "secondary",
+          "locator": "Table 5, p.6"
+        },
+        "matterport3d": {
+          "miou": 33.4,
+          "macc": 39.0,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "secondary",
+          "locator": "Table 5, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "minkowskinet",
@@ -607,7 +1078,11 @@
       "supervision": "fully_supervised",
       "paper": {
         "title": "4D Spatio-Temporal ConvNets: Minkowski Convolutional Neural Networks",
-        "authors": ["C. Choy", "J. Gwak", "S. Savarese"],
+        "authors": [
+          "C. Choy",
+          "J. Gwak",
+          "S. Savarese"
+        ],
         "year": 2019,
         "venue": "CVPR 2019",
         "venue_type": "conference",
@@ -623,14 +1098,35 @@
         "notes": "全监督参考；数值取自 OpenScene 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 69.0, "macc": 77.5, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "secondary", "locator": "Table 5, p.6"},
-        "nuscenes": {"miou": 78.0, "macc": 83.7, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "secondary", "locator": "Table 5, p.6"},
-        "matterport3d": {"miou": 54.2, "macc": 64.6, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "secondary", "locator": "Table 5, p.6"}
+        "scannet_v2": {
+          "miou": 69.0,
+          "macc": 77.5,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "secondary",
+          "locator": "Table 5, p.6"
+        },
+        "nuscenes": {
+          "miou": 78.0,
+          "macc": 83.7,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "secondary",
+          "locator": "Table 5, p.6"
+        },
+        "matterport3d": {
+          "miou": 54.2,
+          "macc": 64.6,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "secondary",
+          "locator": "Table 5, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "ptv3",
@@ -639,7 +1135,9 @@
       "supervision": "fully_supervised",
       "paper": {
         "title": "Point Transformer V3: Simpler, Faster, Stronger",
-        "authors": ["X. Wu et al."],
+        "authors": [
+          "X. Wu et al."
+        ],
         "year": 2024,
         "venue": "CVPR 2024",
         "venue_type": "conference",
@@ -655,13 +1153,28 @@
         "notes": "全监督参考；数值转引自 GeoGuide 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 77.5, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"},
-        "nuscenes": {"miou": 80.4, "macc": null, "source": "GeoGuide, CVPR 2026, Tab.1", "source_kind": "secondary", "locator": "Table 1, p.6"}
+        "scannet_v2": {
+          "miou": 77.5,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        },
+        "nuscenes": {
+          "miou": 80.4,
+          "macc": null,
+          "source": "GeoGuide, CVPR 2026, Tab.1",
+          "source_kind": "secondary",
+          "locator": "Table 1, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "mix3d",
@@ -670,7 +1183,9 @@
       "supervision": "fully_supervised",
       "paper": {
         "title": "Mix3D: Out-of-Context Data Augmentation for 3D Scenes",
-        "authors": ["A. Nekrasov et al."],
+        "authors": [
+          "A. Nekrasov et al."
+        ],
         "year": 2021,
         "venue": "3DV 2021",
         "venue_type": "conference",
@@ -686,12 +1201,21 @@
         "notes": "全监督参考；数值取自 OpenScene 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 73.6, "macc": null, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "secondary", "locator": "Table 5, p.6"}
+        "scannet_v2": {
+          "miou": 73.6,
+          "macc": null,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "secondary",
+          "locator": "Table 5, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     },
     {
       "id": "vmnet",
@@ -700,7 +1224,9 @@
       "supervision": "fully_supervised",
       "paper": {
         "title": "VMNet: Voxel-Mesh Network for Geodesic-Aware 3D Semantic Segmentation",
-        "authors": ["W. Hu et al."],
+        "authors": [
+          "W. Hu et al."
+        ],
         "year": 2021,
         "venue": "ICCV 2021",
         "venue_type": "conference",
@@ -716,13 +1242,28 @@
         "notes": "全监督参考；数值取自 OpenScene 对照表"
       },
       "results": {
-        "scannet_v2": {"miou": 73.2, "macc": null, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "secondary", "locator": "Table 5, p.6"},
-        "matterport3d": {"miou": 67.2, "macc": null, "source": "OpenScene, CVPR 2023, Tab.5", "source_kind": "secondary", "locator": "Table 5, p.6"}
+        "scannet_v2": {
+          "miou": 73.2,
+          "macc": null,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "secondary",
+          "locator": "Table 5, p.6"
+        },
+        "matterport3d": {
+          "miou": 67.2,
+          "macc": null,
+          "source": "OpenScene, CVPR 2023, Tab.5",
+          "source_kind": "secondary",
+          "locator": "Table 5, p.6"
+        }
       },
       "verified": true,
       "verified_at": "2026-11-09",
       "added_at": "2026-11-09",
-      "tags": []
+      "tags": [],
+      "tracks": [
+        "ov"
+      ]
     }
   ]
 }

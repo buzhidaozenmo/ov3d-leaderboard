@@ -92,6 +92,46 @@ class ValidateTests(unittest.TestCase):
         self.assertTrue(any("未知数据集" in e for e in build.validate(payload([item]))))
 
 
+class MultiViewTests(unittest.TestCase):
+    def test_multi_view_requires_metadata(self):
+        item = method("mv", 60.0)
+        item["tracks"] = ["ov", "multi_view"]
+        errors = build.validate(payload([item]))
+        self.assertTrue(any("mv.teacher_2d" in e for e in errors))
+
+    def test_multi_view_valid(self):
+        item = method("mv", 60.0)
+        item["tracks"] = ["ov", "multi_view"]
+        item["mv"] = {
+            "teacher_2d": "LSeg", "correspondence": "投影", "fusion": "均值",
+            "stage_3d": "2d3d_ensemble", "student_3d": "3D student",
+        }
+        self.assertEqual(build.validate(payload([item])), [])
+
+    def test_mv_ranking_excludes_general_rows(self):
+        general = method("a", 70.0)
+        multi = method("b", 50.0)
+        multi["tracks"] = ["ov", "multi_view"]
+        multi["mv"] = {
+            "teacher_2d": "LSeg", "correspondence": "投影", "fusion": "均值",
+            "stage_3d": "3d_distill", "student_3d": "3D student",
+        }
+        ranks, best = build.rank_methods([general, multi], "multi_view")
+        self.assertEqual(ranks["scannet_v2"], {"b": 1})
+        self.assertEqual(best["scannet_v2"], 50.0)
+
+    def test_payload_multi_view_counts(self):
+        multi = method("b", 50.0)
+        multi["tracks"] = ["ov", "multi_view"]
+        multi["mv"] = {
+            "teacher_2d": "LSeg", "correspondence": "投影", "fusion": "均值",
+            "stage_3d": "3d_distill", "student_3d": "3D student",
+        }
+        out = build.build_payload(payload([multi, method("a", 70.0)]), {}, [])
+        self.assertEqual(out["multi_view"]["counts"]["methods"], 1)
+        self.assertEqual(out["multi_view"]["ranks"]["scannet_v2"], {"b": 1})
+
+
 class RankingTests(unittest.TestCase):
     def test_descending_and_competition_rank(self):
         methods = [method("a", 60.0), method("b", 70.0), method("c", 60.0), method("d", 40.0)]

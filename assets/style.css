@@ -156,6 +156,136 @@ h1 {
   font-variant-numeric: tabular-nums;
 }
 
+/* ---------- site nav ---------- */
+
+.sitenav {
+  display: flex;
+  gap: 26px;
+  margin-top: 12px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.sitenav a {
+  display: inline-block;
+  padding: 9px 0 7px;
+  margin-bottom: -1px;
+  border-bottom: 3px solid transparent;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.sitenav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--red);
+}
+
+.sitenav a:hover { color: var(--ink); }
+
+/* ---------- pipeline ---------- */
+
+.pipeline {
+  margin-top: 30px;
+  border-top: 2px solid var(--ink);
+  padding-top: 16px;
+}
+
+.pipeline-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 14px;
+}
+
+.pipeline-head h2 { margin: 0; font-size: clamp(18px, 2vw, 26px); letter-spacing: -0.03em; }
+.pipeline-head p { margin: 0; max-width: 46ch; text-align: right; font-size: 10px; color: var(--muted); }
+
+.pipeline-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  border-top: 1px solid var(--ink);
+  padding-top: 9px;
+  min-width: 0;
+}
+
+.step b {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.step strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.step span { display: block; font-size: 10px; line-height: 1.5; color: var(--muted); }
+
+/* ---------- multi-view table ---------- */
+
+.mv-board .c-rank { width: 54px; }
+.mv-board .c-method { width: 226px; }
+.mv-board .c-venue { width: 108px; }
+.mv-board .c-miou { width: 108px; }
+.mv-board .c-macc { width: 66px; }
+.mv-board .c-teacher { width: 132px; }
+.mv-board .c-corr { width: 218px; }
+.mv-board .c-stage { width: 104px; }
+.mv-board .c-code { width: 92px; }
+.mv-board .c-more { width: 40px; }
+
+.cell-small { display: block; font-size: 11px; line-height: 1.4; color: #3f3f3c; }
+.stack span { display: block; font-size: 11px; line-height: 1.45; color: #3f3f3c; }
+.stack .muted { font-size: 10px; color: var(--muted); }
+.mv-board .chip { white-space: nowrap; }
+
+/* ---------- scope ---------- */
+
+.scope {
+  margin-top: 44px;
+  border-top: 2px solid var(--ink);
+  padding-top: 18px;
+}
+
+.scope > h2 { margin: 0 0 14px; font-size: clamp(20px, 2.2vw, 30px); letter-spacing: -0.03em; }
+
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+}
+
+.scope-grid h3 {
+  margin: 0 0 8px;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.scope-grid p, .scope-grid li { font-size: 12px; line-height: 1.65; color: #3f3f3c; }
+.scope-grid p { margin: 0; }
+.scope-grid ul { margin: 0; padding-left: 16px; }
+.scope-grid li { margin-bottom: 4px; }
+
 /* ---------- tabs ---------- */
 
 .tabs {
@@ -656,6 +786,66 @@ tr.row:hover .more { border-color: var(--ink); }
 .log-empty { display: block !important; font-size: 12px; color: var(--muted); padding: 12px 0; }
 
 @media (max-width: 900px) {
+  .pipeline-head { flex-direction: column; gap: 4px; }
+  .pipeline-head p { text-align: left; }
+  .pipeline-steps { grid-template-columns: 1fr; gap: 12px; }
+  .scope-grid { grid-template-columns: 1fr; gap: 18px; }
+
+  .mv-board { display: block; width: 100%; }
+  .mv-board thead { display: none; }
+  .mv-board tbody { display: block; }
+  .mv-board tr.row {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 36px;
+    grid-template-areas:
+      "rank method more"
+      "rank venue more"
+      "rank miou more"
+      "rank macc more"
+      "rank teacher more"
+      "rank corr more"
+      "rank stage more"
+      "rank code more";
+    column-gap: 12px;
+    row-gap: 5px;
+    padding: 16px 0 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mv-board tr.row td { display: block; border: 0; padding: 0; min-width: 0; width: auto; }
+  .mv-board tr.row .c-rank { grid-area: rank; }
+  .mv-board tr.row .c-method { grid-area: method; }
+  .mv-board tr.row .c-venue { grid-area: venue; }
+  .mv-board tr.row .c-miou { grid-area: miou; margin-top: 4px; }
+  .mv-board tr.row .c-macc { grid-area: macc; }
+  .mv-board tr.row .c-teacher { grid-area: teacher; margin-top: 2px; }
+  .mv-board tr.row .c-teacher::before {
+    content: "2D 教师";
+    display: block;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .mv-board tr.row .c-corr { grid-area: corr; margin-top: 2px; }
+  .mv-board tr.row .c-corr::before {
+    content: "对应 / 融合";
+    display: block;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .mv-board tr.row .c-stage { grid-area: stage; justify-self: start; margin-top: 2px; }
+  .mv-board tr.row .c-code { grid-area: code; justify-self: start; margin-top: 2px; }
+  .mv-board tr.row .c-more { grid-area: more; justify-self: end; align-self: start; }
+  .mv-board tr.row .bar { max-width: 220px; }
+  .mv-board tr.row .number { font-size: 24px; }
+
+  .mv-board .separator { display: block; }
+  .mv-board .separator td { display: block; border: 0; border-top: 2px solid var(--ink); }
+  .mv-board .details { display: block; }
+  .mv-board .details td { display: block; }
+
   .log-head { flex-direction: column; gap: 2px; }
   .log-head p { text-align: left; }
   .log-list li { grid-template-columns: 82px minmax(0, 1fr); }
@@ -735,6 +925,66 @@ tr.row:hover .more { border-color: var(--ink); }
 }
 
 @media (max-width: 900px) {
+  .pipeline-head { flex-direction: column; gap: 4px; }
+  .pipeline-head p { text-align: left; }
+  .pipeline-steps { grid-template-columns: 1fr; gap: 12px; }
+  .scope-grid { grid-template-columns: 1fr; gap: 18px; }
+
+  .mv-board { display: block; width: 100%; }
+  .mv-board thead { display: none; }
+  .mv-board tbody { display: block; }
+  .mv-board tr.row {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 36px;
+    grid-template-areas:
+      "rank method more"
+      "rank venue more"
+      "rank miou more"
+      "rank macc more"
+      "rank teacher more"
+      "rank corr more"
+      "rank stage more"
+      "rank code more";
+    column-gap: 12px;
+    row-gap: 5px;
+    padding: 16px 0 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mv-board tr.row td { display: block; border: 0; padding: 0; min-width: 0; width: auto; }
+  .mv-board tr.row .c-rank { grid-area: rank; }
+  .mv-board tr.row .c-method { grid-area: method; }
+  .mv-board tr.row .c-venue { grid-area: venue; }
+  .mv-board tr.row .c-miou { grid-area: miou; margin-top: 4px; }
+  .mv-board tr.row .c-macc { grid-area: macc; }
+  .mv-board tr.row .c-teacher { grid-area: teacher; margin-top: 2px; }
+  .mv-board tr.row .c-teacher::before {
+    content: "2D 教师";
+    display: block;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .mv-board tr.row .c-corr { grid-area: corr; margin-top: 2px; }
+  .mv-board tr.row .c-corr::before {
+    content: "对应 / 融合";
+    display: block;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .mv-board tr.row .c-stage { grid-area: stage; justify-self: start; margin-top: 2px; }
+  .mv-board tr.row .c-code { grid-area: code; justify-self: start; margin-top: 2px; }
+  .mv-board tr.row .c-more { grid-area: more; justify-self: end; align-self: start; }
+  .mv-board tr.row .bar { max-width: 220px; }
+  .mv-board tr.row .number { font-size: 24px; }
+
+  .mv-board .separator { display: block; }
+  .mv-board .separator td { display: block; border: 0; border-top: 2px solid var(--ink); }
+  .mv-board .details { display: block; }
+  .mv-board .details td { display: block; }
+
   h1 { grid-column: 1 / -1; margin-bottom: 14px; }
   .lede { grid-column: 1 / -1; margin-bottom: 22px; }
   .masthead-grid { gap: 0; }
@@ -744,8 +994,9 @@ tr.row:hover .more { border-color: var(--ink); }
   .tablist { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; justify-content: flex-start; }
   .tab, .tab + .tab { padding: 10px 8px; font-size: 14px; border-left: 0; white-space: nowrap; }
   .viewswitch { justify-content: flex-start; padding-bottom: 8px; }
-  .caption-row { flex-direction: column; gap: 4px; }
-  .caption-row p { text-align: left; }
+  .caption-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .caption-row h2 { width: 100%; font-size: clamp(18px, 5.2vw, 26px); }
+  .caption-row p { width: 100%; text-align: left; }
   .details-inner { grid-template-columns: 1fr; gap: 18px; }
   .method-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>多视角 2D→3D 点云分割榜单 · Projection & Fusion</title>
+  <meta name="description" content="多视角 2D 特征/分割经过像素-点对应、可见性与融合，投影到 3D 点云的开放词汇语义分割榜单：ScanNet v2、nuScenes、Matterport3D 的最终 mIoU，标注 2D 教师、对应/融合方式、3D 阶段与开源状态。">
+  <meta name="color-scheme" content="light">
+  <meta property="og:title" content="多视角 2D→3D 点云分割榜单">
+  <meta property="og:description" content="多视角 2D 对应、融合与投影到 3D 点云的开放词汇方法，按 ScanNet v2 / nuScenes / Matterport3D 的最终 mIoU 排名。">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">跳到正文</a>
+
+  <header class="masthead wrap">
+    <div class="kicker">
+      <span>MULTI-VIEW 2D → 3D / PROJECTION · FUSION</span>
+      <span>BENCHMARK · <span id="kicker-year">2026</span></span>
+    </div>
+
+    <nav class="sitenav" aria-label="榜单切换">
+      <a href="index.html">开放词汇总榜</a>
+      <a href="multiview.html" aria-current="page">多视角 2D→3D</a>
+    </nav>
+
+    <div class="masthead-grid">
+      <h1>多视角 2D→3D<br>对应、融合与投影</h1>
+      <p class="lede">
+        多视角 2D 分割/特征，经像素-点对应、可见性与融合，落到 3D 点云上的开放词汇方法。
+        只排每个配置的最终 mIoU，并注明 2D 教师、对应/融合方式与 3D 阶段。
+      </p>
+    </div>
+    <dl class="stats" aria-label="数据概览">
+      <div>
+        <dt>收录方法</dt>
+        <dd><span id="stat-methods">—</span><small>个</small></dd>
+      </div>
+      <div>
+        <dt>最近抓取</dt>
+        <dd id="stat-check" class="stat-date">—</dd>
+      </div>
+      <div>
+        <dt>待核实</dt>
+        <dd><span id="stat-pending">—</span><small>条</small></dd>
+      </div>
+      <div>
+        <dt>数据更新</dt>
+        <dd id="stat-updated" class="stat-date">—</dd>
+      </div>
+    </dl>
+  </header>
+
+  <section class="pipeline wrap" aria-labelledby="pipeline-title">
+    <div class="pipeline-head">
+      <h2 id="pipeline-title">这条管线在做什么</h2>
+      <p>只有同时做到 01–05 的论文才收录；只做文本-3D 对齐或单视图蒸馏的不算。</p>
+    </div>
+    <ol class="pipeline-steps">
+      <li class="step">
+        <b>01</b>
+        <strong>多视角 RGB / RGB-D</strong>
+        <span>带位姿的图像序列，与 3D 点云对齐</span>
+      </li>
+      <li class="step">
+        <b>02</b>
+        <strong>2D 分割 / 特征</strong>
+        <span>LSeg、OpenSeg、SEEM、DINOv2、SAM 等</span>
+      </li>
+      <li class="step">
+        <b>03</b>
+        <strong>像素-点对应</strong>
+        <span>投影、深度/可见性、遮挡与超点</span>
+      </li>
+      <li class="step">
+        <b>04</b>
+        <strong>多视角融合</strong>
+        <span>均值、能力加权、不确定度、几何引导</span>
+      </li>
+      <li class="step">
+        <b>05</b>
+        <strong>3D 蒸馏 / 集成</strong>
+        <span>3D 学生、2D-3D ensemble 或少量标签微调</span>
+      </li>
+    </ol>
+  </section>
+
+  <nav class="tabs wrap" aria-label="数据集">
+    <div class="tablist" role="tablist" aria-label="选择数据集">
+      <button class="tab" role="tab" data-dataset="scannet_v2" aria-selected="true">
+        ScanNet v2 <sup>20 类</sup>
+      </button>
+      <button class="tab" role="tab" data-dataset="nuscenes" aria-selected="false">
+        nuScenes <sup>16 类</sup>
+      </button>
+      <button class="tab" role="tab" data-dataset="matterport3d" aria-selected="false">
+        Matterport3D <sup>21 类</sup>
+      </button>
+    </div>
+    <div class="viewswitch" role="group" aria-label="视图">
+      <a class="ghost" href="index.html">回到总榜</a>
+    </div>
+  </nav>
+
+  <main id="main" class="wrap">
+    <section aria-labelledby="table-caption">
+      <div class="toolbar">
+        <label class="search">
+          <span class="sr">搜索方法或论文</span>
+          <input id="search" type="search" placeholder="搜索方法 / 论文 / venue" autocomplete="off">
+        </label>
+        <label class="check"><input id="only-open" type="checkbox"> 只看开源</label>
+        <label class="select">
+          <span class="sr">3D 阶段</span>
+          <select id="stage-filter">
+            <option value="all">全部 3D 阶段</option>
+            <option value="3d_distill">3D 蒸馏</option>
+            <option value="self_distill">自蒸馏</option>
+            <option value="2d3d_ensemble">2D-3D 集成</option>
+            <option value="few_label">少量标签</option>
+          </select>
+        </label>
+        <label class="select">
+          <span class="sr">排序</span>
+          <select id="sort">
+            <option value="miou">按 mIoU 降序</option>
+            <option value="year">按年份降序</option>
+            <option value="name">按方法名</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="caption-row">
+        <h2 id="table-caption">—</h2>
+        <p id="table-sub">—</p>
+      </div>
+
+      <div class="tablewrap">
+        <table class="board mv-board" id="board">
+          <thead>
+            <tr>
+              <th scope="col" class="c-rank">名次</th>
+              <th scope="col" class="c-method">方法</th>
+              <th scope="col" class="c-venue">发表</th>
+              <th scope="col" class="c-miou">mIoU</th>
+              <th scope="col" class="c-macc">mAcc</th>
+              <th scope="col" class="c-teacher">2D 教师</th>
+              <th scope="col" class="c-corr">对应 / 融合</th>
+              <th scope="col" class="c-stage">3D 阶段</th>
+              <th scope="col" class="c-code">开源</th>
+              <th scope="col" class="c-more"><span class="sr">详情</span></th>
+            </tr>
+          </thead>
+          <tbody id="board-body"></tbody>
+        </table>
+        <p class="empty" id="empty" hidden>没有符合当前筛选的结果。</p>
+      </div>
+
+      <p class="caveat">
+        数字为论文报告值，未重新评测。变体只取论文的最终配置；同一篇论文的中间阶段（如 SAS stage1、OpenScene 2D Fusion）
+        不在本页单列。跨论文的 2D 教师、可见性阈值与类别映射不同，比较时请结合「对应 / 融合」列与详情出处。
+      </p>
+    </section>
+  </main>
+
+  <section class="scope wrap" aria-labelledby="scope-title">
+    <h2 id="scope-title">收录与排除</h2>
+    <div class="scope-grid">
+      <div>
+        <h3>收录标准</h3>
+        <p>必须同时有：多视角 RGB/RGB-D 输入、2D 特征或分割、显式的像素-点对应、多视角融合，以及落到 3D 的蒸馏/集成。类别集合须为 ScanNet20 / nuScenes16 / Matterport21 的常见协议。</p>
+      </div>
+      <div>
+        <h3>排除（附原因）</h3>
+        <ul>
+          <li>PLA、RegionPLC：区域-语言对比，没有多视图投影。</li>
+          <li>CLIP2Scene、CLIP-FO3D：无位姿的单视图/特征蒸馏。</li>
+          <li>Diff2Scene：文本到图像扩散先验，不做多视角对应。</li>
+          <li>PGOV3D、GeoZe、DMA：纯 3D 课程/几何聚合或多模态对齐，没有 2D→3D 投影融合。</li>
+          <li>OV3D：3D 特征与实体文本对齐；未把多视角 2D 投影作为管线核心。</li>
+          <li>全监督多视角方法（DITR 等）：本版只收开放词汇，暂不混排。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <aside class="pending wrap" aria-labelledby="pending-title">
+    <div class="pending-head">
+      <h2 id="pending-title">本期待审</h2>
+      <p>只显示命中「多视角 / 投影 / 2D-3D 融合」关键词的新候选；核实后才会入榜。</p>
+    </div>
+    <ul id="pending-list" class="pending-list"></ul>
+  </aside>
+
+  <section class="changelog wrap" aria-labelledby="changelog-title">
+    <div class="log-head">
+      <h2 id="changelog-title">更新记录</h2>
+      <p>新增论文与数值修订由维护者登记，GitHub 提交历史保留完整变更。</p>
+    </div>
+    <ol id="changelog-list" class="log-list"></ol>
+  </section>
+
+  <section class="method wrap" aria-labelledby="method-title">
+    <h2 id="method-title">方法说明</h2>
+    <div class="method-grid">
+      <div>
+        <h3>排名口径</h3>
+        <p>只对已核实的开放词汇行按当前数据集 mIoU 降序排名，并列同名次；少量标签（GeoPurify）在参考组，不占名次。</p>
+      </div>
+      <div>
+        <h3>对应方式</h3>
+        <p>「点-像素投影」指由相机位姿与深度把像素特征投到点上；「超点」指先聚点再对齐；「几何关系」指用局部几何约束蒸馏。</p>
+      </div>
+      <div>
+        <h3>融合策略</h3>
+        <p>多视角均值、教师能力加权、不确定度加权、几何引导池化等。相同论文的不同融合阶段不混为一行。</p>
+      </div>
+      <div>
+        <h3>更新方式</h3>
+        <p>GitHub Actions 每日 09:00 抓取；命中该管线的新论文进入待审，核实 2D 教师、对应/融合与 3D 阶段后写入数据并部署。</p>
+      </div>
+    </div>
+    <p class="cite">引用格式：Multi-View 2D→3D Leaderboard, <span id="cite-url">buzhidaozenmo.github.io/ov3d-leaderboard/multiview.html</span>，访问日期 <span id="cite-date">—</span>。</p>
+  </section>
+
+  <footer class="footer wrap">
+    <div class="footer-grid">
+      <div>
+        <p class="foot-label">DATA</p>
+        <p>只收录公开论文报告值；论文与代码版权归原作者。代码 MIT，数据用于研究索引，引用请以原论文为准。</p>
+      </div>
+      <div>
+        <p class="foot-label">LINKS</p>
+        <p><a href="index.html">开放词汇总榜</a><br>
+           <a href="https://github.com/buzhidaozenmo/ov3d-leaderboard">GitHub 仓库</a><br>
+           <a href="https://buzhidaozenmo.github.io/Open-Vocabulary-Segmentation-Atlas/">相关项目：Open-Vocabulary Segmentation Atlas</a></p>
+      </div>
+      <div>
+        <p class="foot-label">STATUS</p>
+        <p>最近生成 <span id="foot-generated">—</span><br>
+           最近抓取 <span id="foot-checked">—</span><br>
+           <span id="foot-error" class="foot-error" hidden></span></p>
+      </div>
+    </div>
+    <p class="colophon">SET IN HELVETICA NEUE · SWISS INTERNATIONAL STYLE · <span id="foot-year">2026</span></p>
+  </footer>
+
+  <script src="data/leaderboard.js"></script>
+  <script src="assets/mv.js"></script>
+</body>
+</html>

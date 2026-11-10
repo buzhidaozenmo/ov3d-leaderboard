@@ -261,8 +261,14 @@ def main(argv: list[str] | None = None) -> int:
         if not any(word in (entry["title"] + " " + entry["abstract"]).lower()
                    for word in ("segment", "semantic", "label")):
             continue
+        text = (entry["title"] + " " + entry["abstract"]).lower()
+        mv_hits = any(word in text for word in (
+            "multi-view", "multi view", "projection", "pixel-point", "2d-3d",
+            "2d3d", "fusion", "superpoint", "lift",
+        ))
         item = {
             "id": key,
+            "tracks": ["ov", "multi_view"] if mv_hits else ["ov"],
             "arxiv_id": key,
             "title": entry["title"],
             "authors": entry["authors"],

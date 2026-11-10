@@ -34,8 +34,9 @@ def main() -> int:
     for index, item in enumerate(pending, start=1):
         venue = item.get("venue_hint") or "venue 未定"
         keywords = " / ".join(item.get("matched_keywords") or [])
+        tracks = ", ".join(item.get("tracks") or ["ov"])
         print(f"{index:>3}. [{item.get('published', '?')}] {item.get('title', '')}")
-        print(f"     {venue} · {item.get('url', '')}")
+        print(f"     {venue} · {item.get('url', '')} · tracks: {tracks}")
         if keywords:
             print(f"     命中：{keywords}")
         print()
