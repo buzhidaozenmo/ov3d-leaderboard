@@ -23,9 +23,11 @@
     ],
     "score": 9,
     "found_at": "2026-11-10 15:59",
-    "status": "pending",
+    "status": "rejected",
     "source": "arxiv",
-    "abstract_snippet": "Recent progress in vision foundation models (VFMs) has made automated open-vocabulary 3D bounding box annotation increasingly feasible by jointly leveraging LiDAR point clouds and images. However, partial observations remain a major challenge in sparse driving scenes, where visible LiDAR points often cover only a small"
+    "abstract_snippet": "Recent progress in vision foundation models (VFMs) has made automated open-vocabulary 3D bounding box annotation increasingly feasible by jointly leveraging LiDAR point clouds and images. However, partial observations remain a major challenge in sparse driving scenes, where visible LiDAR points often cover only a small",
+    "note": "开放词汇 3D 包围盒自动标注（检测/标注），不是语义或实例分割，没有这三个数据集的 mIoU/AP。",
+    "reviewed_at": "2026-11-15"
   },
   {
     "id": "2611.10379",
@@ -54,8 +56,10 @@
     ],
     "score": 8,
     "found_at": "2026-11-10 15:59",
-    "status": "pending",
+    "status": "rejected",
     "source": "arxiv",
-    "abstract_snippet": "Open-vocabulary 3D scene understanding aims to segment and retrieve arbitrary objects in 3D scenes using natural language queries. Most existing methods typically follow a splat-then-segment paradigm, where 3D Gaussian Splatting is first reconstructed and then augmented with labels or language features for subsequent s"
+    "abstract_snippet": "Open-vocabulary 3D scene understanding aims to segment and retrieve arbitrary objects in 3D scenes using natural language queries. Most existing methods typically follow a splat-then-segment paradigm, where 3D Gaussian Splatting is first reconstructed and then augmented with labels or language features for subsequent s",
+    "note": "3D Gaussian Splatting 的对象级开放词汇查询，不是点云语义/实例分割；无 ScanNet/nuScenes/Matterport3D 的 mIoU 或 AP。",
+    "reviewed_at": "2026-11-15"
   }
 ]

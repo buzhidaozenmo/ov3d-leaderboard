@@ -1,7 +1,7 @@
 /* 本文件由 scripts/build.py 生成，请勿手工编辑。 */
 window.OV3D_DATA = {
   "schema_version": 1,
-  "generated_at": "2026-11-14 15:20",
+  "generated_at": "2026-11-15 10:00",
   "data_updated_at": "2026-11-10",
   "last_checked": "2026-11-14 15:20",
   "next_check": "2026-11-15 09:00",
@@ -1819,7 +1819,7 @@ window.OV3D_DATA = {
     },
     "counts": {
       "methods": 7,
-      "pending": 1
+      "pending": 0
     }
   },
   "instance": {
@@ -2484,46 +2484,13 @@ window.OV3D_DATA = {
     "papers": 23,
     "unique_papers": 19,
     "results": 50,
-    "pending": 2,
+    "pending": 0,
     "open_vocab": 17,
     "few_label": 1,
     "fully_supervised": 4,
     "transfer_baseline": 1
   },
-  "pending": [
-    {
-      "id": "2611.10821",
-      "title": "AmodalBox: Automated 3D Bounding Box Annotation under Partial Visibility",
-      "arxiv_id": "2611.10821",
-      "url": "https://arxiv.org/abs/2611.10821",
-      "found_at": "2026-11-10 15:59",
-      "keywords": [
-        "nuscenes",
-        "open-vocab",
-        "open-vocabulary"
-      ],
-      "venue_hint": "",
-      "tracks": [
-        "ov"
-      ]
-    },
-    {
-      "id": "2611.10379",
-      "title": "RefineSplat: Reconstruction-Guided Object-Centric Gaussian Splatting for Open-Vocabulary Querying",
-      "arxiv_id": "2611.10379",
-      "url": "https://arxiv.org/abs/2611.10379",
-      "found_at": "2026-11-10 15:59",
-      "keywords": [
-        "open-vocab",
-        "open-vocabulary"
-      ],
-      "venue_hint": "",
-      "tracks": [
-        "ov",
-        "multi_view"
-      ]
-    }
-  ],
+  "pending": [],
   "changelog": [
     {
       "at": "2026-11-10 09:45",
