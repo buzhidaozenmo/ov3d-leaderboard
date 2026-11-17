@@ -25,9 +25,11 @@
     ],
     "score": 9,
     "found_at": "2026-11-16 15:38",
-    "status": "pending",
+    "status": "rejected",
     "source": "arxiv",
-    "abstract_snippet": "Recent open-vocabulary multi-view indoor 3D detection methods typically follow a point-cloud-driven pipeline, where pseudo 3D boxes are generated from reconstructed or estimated geometry and semantic labels are inferred from projected regions. However, such a design makes box generation dependent on the completeness of"
+    "abstract_snippet": "Recent open-vocabulary multi-view indoor 3D detection methods typically follow a point-cloud-driven pipeline, where pseudo 3D boxes are generated from reconstructed or estimated geometry and semantic labels are inferred from projected regions. However, such a design makes box generation dependent on the completeness of",
+    "note": "多视角开放词汇 3D 目标检测（输出 3D 框），不是语义分割或实例分割；没有 ScanNet/nuScenes/Matterport3D 的语义 mIoU 或实例 AP。",
+    "reviewed_at": "2026-11-17"
   },
   {
     "id": "2611.10821",

@@ -1,7 +1,7 @@
 /* 本文件由 scripts/build.py 生成，请勿手工编辑。 */
 window.OV3D_DATA = {
   "schema_version": 1,
-  "generated_at": "2026-11-16 15:38",
+  "generated_at": "2026-11-17 10:00",
   "data_updated_at": "2026-11-10",
   "last_checked": "2026-11-16 15:38",
   "next_check": "2026-11-17 09:00",
@@ -1819,7 +1819,7 @@ window.OV3D_DATA = {
     },
     "counts": {
       "methods": 7,
-      "pending": 1
+      "pending": 0
     }
   },
   "instance": {
@@ -2484,31 +2484,13 @@ window.OV3D_DATA = {
     "papers": 23,
     "unique_papers": 19,
     "results": 50,
-    "pending": 1,
+    "pending": 0,
     "open_vocab": 17,
     "few_label": 1,
     "fully_supervised": 4,
     "transfer_baseline": 1
   },
-  "pending": [
-    {
-      "id": "2611.17897",
-      "title": "See and Detect: Image-Driven Open-Vocabulary Multi-View 3D Object Detection",
-      "arxiv_id": "2611.17897",
-      "url": "https://arxiv.org/abs/2611.17897",
-      "found_at": "2026-11-16 15:38",
-      "keywords": [
-        "open-vocab",
-        "open-vocabulary",
-        "scannet"
-      ],
-      "venue_hint": "",
-      "tracks": [
-        "ov",
-        "multi_view"
-      ]
-    }
-  ],
+  "pending": [],
   "changelog": [
     {
       "at": "2026-11-10 09:45",
