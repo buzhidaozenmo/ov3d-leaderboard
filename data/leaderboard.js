@@ -1,10 +1,10 @@
 /* 本文件由 scripts/build.py 生成，请勿手工编辑。 */
 window.OV3D_DATA = {
   "schema_version": 1,
-  "generated_at": "2026-11-18 16:12",
+  "generated_at": "2026-11-19 16:23",
   "data_updated_at": "2026-11-10",
-  "last_checked": "2026-11-18 16:12",
-  "next_check": "2026-11-19 09:00",
+  "last_checked": "2026-11-19 16:23",
+  "next_check": "2026-11-20 09:00",
   "last_error": null,
   "benchmarks": [
     {
@@ -1819,7 +1819,7 @@ window.OV3D_DATA = {
     },
     "counts": {
       "methods": 7,
-      "pending": 0
+      "pending": 1
     }
   },
   "instance": {
@@ -2484,13 +2484,32 @@ window.OV3D_DATA = {
     "papers": 23,
     "unique_papers": 19,
     "results": 50,
-    "pending": 0,
+    "pending": 1,
     "open_vocab": 17,
     "few_label": 1,
     "fully_supervised": 4,
     "transfer_baseline": 1
   },
-  "pending": [],
+  "pending": [
+    {
+      "id": "2611.24643",
+      "title": "AggCLIP: Aggregating CLIP for Zero-Shot Multimodal Anomaly Detection",
+      "arxiv_id": "2611.24643",
+      "url": "https://arxiv.org/abs/2611.24643",
+      "found_at": "2026-11-19 16:23",
+      "keywords": [
+        "open-vocab",
+        "open-vocabulary",
+        "vision-language",
+        "zero-shot"
+      ],
+      "venue_hint": "",
+      "tracks": [
+        "ov",
+        "multi_view"
+      ]
+    }
+  ],
   "changelog": [
     {
       "at": "2026-11-10 09:45",

@@ -1,5 +1,34 @@
 [
   {
+    "id": "2611.24643",
+    "tracks": [
+      "ov",
+      "multi_view"
+    ],
+    "arxiv_id": "2611.24643",
+    "title": "AggCLIP: Aggregating CLIP for Zero-Shot Multimodal Anomaly Detection",
+    "authors": [
+      "Zhi Li",
+      "Hanyu Wang",
+      "Fei Shen",
+      "Zhengtao Zhang"
+    ],
+    "published": "2026-11-18",
+    "url": "https://arxiv.org/abs/2611.24643",
+    "venue_hint": "",
+    "matched_keywords": [
+      "open-vocab",
+      "open-vocabulary",
+      "vision-language",
+      "zero-shot"
+    ],
+    "score": 12,
+    "found_at": "2026-11-19 16:23",
+    "status": "pending",
+    "source": "arxiv",
+    "abstract_snippet": "Zero-Shot Multimodal Anomaly Detection (ZSMAD) aims to identify both appearance and geometric defects in novel categories without relying on target-specific training data, making it especially valuable in real-world scenarios constrained by data scarcity, privacy concerns, or high annotation costs. While recent approac"
+  },
+  {
     "id": "2611.17897",
     "tracks": [
       "ov",
