@@ -1,7 +1,7 @@
 import socket, threading, selectors, sys
 
 LISTEN = ("127.0.0.1", 8899)
-OVERRIDES = {"github.com": "140.82.112.3"}
+OVERRIDES = {"github.com": ["140.82.113.3", "20.27.177.113", "140.82.112.3"]}
 
 def pipe(a, b):
     try:
@@ -32,12 +32,18 @@ def handle(conn):
             conn.sendall(b"HTTP/1.1 405 Method Not Allowed\r\n\r\n"); return
         host, _, port = target.partition(":")
         port = int(port or 443)
-        ip = OVERRIDES.get(host)
-        if ip:
-            addr = (ip, port)
-        else:
+        ips = OVERRIDES.get(host)
+        upstream = None
+        if ips:
+            for ip in ips:
+                try:
+                    upstream = socket.create_connection((ip, port), timeout=8)
+                    break
+                except OSError:
+                    continue
+        if upstream is None:
             addr = socket.getaddrinfo(host, port, proto=socket.IPPROTO_TCP)[0][4]
-        upstream = socket.create_connection(addr, timeout=20)
+            upstream = socket.create_connection(addr, timeout=20)
         conn.sendall(b"HTTP/1.1 200 Connection Established\r\n\r\n")
         conn.settimeout(None); upstream.settimeout(None)
         t = threading.Thread(target=pipe, args=(upstream, conn), daemon=True)
