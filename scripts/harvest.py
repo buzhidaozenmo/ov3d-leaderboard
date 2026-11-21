@@ -83,10 +83,23 @@ def write_json(path: Path, payload) -> None:
     os.replace(tmp, path)
 
 
-def fetch(url: str, timeout: int = 30) -> str:
+def fetch(url: str, timeout: int = 45) -> str:
     request = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return response.read().decode("utf-8", "replace")
+
+
+def fetch_retry(url: str, attempts: int = 3, timeout: int = 45) -> str:
+    """arXiv 偶发读超时；每个查询重试，避免整次任务因一次抖动失败。"""
+    last: Exception | None = None
+    for index in range(attempts):
+        try:
+            return fetch(url, timeout=timeout)
+        except (urllib.error.URLError, TimeoutError, OSError) as exc:
+            last = exc
+            if index + 1 < attempts:
+                time.sleep(4 * (index + 1))
+    raise last  # type: ignore[misc]
 
 
 def base_arxiv_id(raw: str) -> str:
@@ -219,21 +232,27 @@ def main(argv: list[str] | None = None) -> int:
     existing_titles = {normalize_title(c.get("title", "")) for c in candidates}
 
     fetched: list[dict] = []
-    try:
-        for query in QUERIES:
-            url = (
-                "https://export.arxiv.org/api/query?search_query="
-                + urllib.parse.quote(query)
-                + f"&start=0&max_results={args.max}&sortBy=submittedDate&sortOrder=descending"
-            )
-            fetched.extend(parse_arxiv(fetch(url)))
-            time.sleep(3.2)  # arXiv 请求间隔要求
-    except (urllib.error.URLError, TimeoutError, ElementTree.ParseError) as exc:
-        message = f"arXiv 抓取失败：{exc}"
+    failures: list[str] = []
+    for query in QUERIES:
+        url = (
+            "https://export.arxiv.org/api/query?search_query="
+            + urllib.parse.quote(query)
+            + f"&start=0&max_results={args.max}&sortBy=submittedDate&sortOrder=descending"
+        )
+        try:
+            fetched.extend(parse_arxiv(fetch_retry(url)))
+        except (urllib.error.URLError, TimeoutError, OSError, ElementTree.ParseError) as exc:
+            failures.append(f"{query}: {exc}")
+            print(f"[harvest] 查询失败，继续其余查询：{query} ({exc})", file=sys.stderr)
+        time.sleep(3.2)  # arXiv 请求间隔要求
+    if failures and len(failures) == len(QUERIES):
+        message = "arXiv 全部查询失败：" + "; ".join(failures[:3])
         print(f"[harvest] {message}", file=sys.stderr)
         state["last_error"] = message
         write_json(DATA / "state.json", state)
         return 2
+    if failures:
+        print(f"[harvest] 部分查询失败（{len(failures)}/{len(QUERIES)}），按成功结果继续", file=sys.stderr)
 
     seen: set[str] = set()
     new_items: list[dict] = []
