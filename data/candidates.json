@@ -24,9 +24,11 @@
     ],
     "score": 12,
     "found_at": "2026-11-19 16:23",
-    "status": "pending",
+    "status": "rejected",
     "source": "arxiv",
-    "abstract_snippet": "Zero-Shot Multimodal Anomaly Detection (ZSMAD) aims to identify both appearance and geometric defects in novel categories without relying on target-specific training data, making it especially valuable in real-world scenarios constrained by data scarcity, privacy concerns, or high annotation costs. While recent approac"
+    "abstract_snippet": "Zero-Shot Multimodal Anomaly Detection (ZSMAD) aims to identify both appearance and geometric defects in novel categories without relying on target-specific training data, making it especially valuable in real-world scenarios constrained by data scarcity, privacy concerns, or high annotation costs. While recent approac",
+    "note": "零样本多模态异常检测（2D 外观 + 3D 几何缺陷），不是语义/实例分割；没有 ScanNet/nuScenes/Matterport3D 的语义 mIoU 或实例 AP。",
+    "reviewed_at": "2026-11-21"
   },
   {
     "id": "2611.17897",
