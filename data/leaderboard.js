@@ -1,10 +1,10 @@
 /* 本文件由 scripts/build.py 生成，请勿手工编辑。 */
 window.OV3D_DATA = {
   "schema_version": 1,
-  "generated_at": "2026-11-23 16:34",
+  "generated_at": "2026-11-24 18:39",
   "data_updated_at": "2026-11-10",
-  "last_checked": "2026-11-23 16:34",
-  "next_check": "2026-11-24 09:00",
+  "last_checked": "2026-11-24 18:39",
+  "next_check": "2026-11-25 09:00",
   "last_error": null,
   "benchmarks": [
     {
@@ -2484,13 +2484,29 @@ window.OV3D_DATA = {
     "papers": 23,
     "unique_papers": 19,
     "results": 50,
-    "pending": 0,
+    "pending": 1,
     "open_vocab": 17,
     "few_label": 1,
     "fully_supervised": 4,
     "transfer_baseline": 1
   },
-  "pending": [],
+  "pending": [
+    {
+      "id": "2611.29213",
+      "title": "PartPO: Part-Level Policy Optimization for Shape-to-Program Generation",
+      "arxiv_id": "2611.29213",
+      "url": "https://arxiv.org/abs/2611.29213",
+      "found_at": "2026-11-24 18:39",
+      "keywords": [
+        "open-vocab",
+        "open-vocabulary"
+      ],
+      "venue_hint": "",
+      "tracks": [
+        "ov"
+      ]
+    }
+  ],
   "changelog": [
     {
       "at": "2026-11-10 09:45",

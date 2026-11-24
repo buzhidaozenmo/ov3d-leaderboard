@@ -1,5 +1,33 @@
 [
   {
+    "id": "2611.29213",
+    "tracks": [
+      "ov"
+    ],
+    "arxiv_id": "2611.29213",
+    "title": "PartPO: Part-Level Policy Optimization for Shape-to-Program Generation",
+    "authors": [
+      "Hannuo Zhang",
+      "Zhixiang Chi",
+      "Xuanchen Li",
+      "Yiqun Zhou",
+      "Yang Wang",
+      "Xinxin Zuo"
+    ],
+    "published": "2026-11-22",
+    "url": "https://arxiv.org/abs/2611.29213",
+    "venue_hint": "",
+    "matched_keywords": [
+      "open-vocab",
+      "open-vocabulary"
+    ],
+    "score": 8,
+    "found_at": "2026-11-24 18:39",
+    "status": "pending",
+    "source": "arxiv",
+    "abstract_snippet": "We present PartPO, a reinforcement learning method for generating structured shape programs from 3D point clouds. Existing shape-to-program models are trained with supervised learning on procedurally generated data and generalize poorly to more diverse shapes, while reinforcement learning from execution feedback assign"
+  },
+  {
     "id": "2611.24643",
     "tracks": [
       "ov",
