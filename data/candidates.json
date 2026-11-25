@@ -1,5 +1,36 @@
 [
   {
+    "id": "2611.32716",
+    "tracks": [
+      "ov",
+      "multi_view"
+    ],
+    "arxiv_id": "2611.32716",
+    "title": "SplatSeg3D: Efficient Zero-Shot 3D Segmentation via Point Cloud Surfelization and Splatting",
+    "authors": [
+      "Sandeep Inuganti",
+      "Mahdi Chamseddine",
+      "Marcel Rogge",
+      "Martin R. Oswald",
+      "Didier Stricker",
+      "Jason Rambach"
+    ],
+    "published": "2026-11-24",
+    "url": "https://arxiv.org/abs/2611.32716",
+    "venue_hint": "",
+    "matched_keywords": [
+      "open-vocab",
+      "open-vocabulary",
+      "scannet",
+      "zero-shot"
+    ],
+    "score": 11,
+    "found_at": "2026-11-25 17:31",
+    "status": "pending",
+    "source": "arxiv",
+    "abstract_snippet": "Open-vocabulary 3D segmentation methods rely on 2D foundation models applied to registered images captured alongside the 3D point clouds. However, such images may not be available in many cases, while direct 3D point cloud segmentation methods require semantic class supervision and are challenging to deploy in a zero-s"
+  },
+  {
     "id": "2611.29213",
     "tracks": [
       "ov"

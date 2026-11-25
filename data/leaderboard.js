@@ -1,10 +1,10 @@
 /* 本文件由 scripts/build.py 生成，请勿手工编辑。 */
 window.OV3D_DATA = {
   "schema_version": 1,
-  "generated_at": "2026-11-24 18:39",
+  "generated_at": "2026-11-25 17:31",
   "data_updated_at": "2026-11-10",
-  "last_checked": "2026-11-24 18:39",
-  "next_check": "2026-11-25 09:00",
+  "last_checked": "2026-11-25 17:31",
+  "next_check": "2026-11-26 09:00",
   "last_error": null,
   "benchmarks": [
     {
@@ -1819,7 +1819,7 @@ window.OV3D_DATA = {
     },
     "counts": {
       "methods": 7,
-      "pending": 0
+      "pending": 1
     }
   },
   "instance": {
@@ -2484,13 +2484,31 @@ window.OV3D_DATA = {
     "papers": 23,
     "unique_papers": 19,
     "results": 50,
-    "pending": 1,
+    "pending": 2,
     "open_vocab": 17,
     "few_label": 1,
     "fully_supervised": 4,
     "transfer_baseline": 1
   },
   "pending": [
+    {
+      "id": "2611.32716",
+      "title": "SplatSeg3D: Efficient Zero-Shot 3D Segmentation via Point Cloud Surfelization and Splatting",
+      "arxiv_id": "2611.32716",
+      "url": "https://arxiv.org/abs/2611.32716",
+      "found_at": "2026-11-25 17:31",
+      "keywords": [
+        "open-vocab",
+        "open-vocabulary",
+        "scannet",
+        "zero-shot"
+      ],
+      "venue_hint": "",
+      "tracks": [
+        "ov",
+        "multi_view"
+      ]
+    },
     {
       "id": "2611.29213",
       "title": "PartPO: Part-Level Policy Optimization for Shape-to-Program Generation",
