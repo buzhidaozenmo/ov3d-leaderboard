@@ -1,10 +1,10 @@
 /* 本文件由 scripts/build.py 生成，请勿手工编辑。 */
 window.OV3D_DATA = {
   "schema_version": 1,
-  "generated_at": "2026-11-28 10:01",
+  "generated_at": "2026-11-28 16:40",
   "data_updated_at": "2026-11-10",
-  "last_checked": "2026-11-27 17:25",
-  "next_check": "2026-11-28 09:00",
+  "last_checked": "2026-11-28 16:40",
+  "next_check": "2026-11-29 09:00",
   "last_error": null,
   "benchmarks": [
     {
