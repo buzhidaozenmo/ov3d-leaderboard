@@ -352,6 +352,54 @@ def rank_instance(instance: dict) -> tuple[dict[str, dict[str, int]], dict[str, 
     return ranks, best
 
 
+def load_supplement() -> dict:
+    path = DATA / "supplement.json"
+    if not path.exists():
+        return {"schema_version": 1, "entries": []}
+    try:
+        return read_json(path)
+    except json.JSONDecodeError as exc:
+        raise DataError(f"data/supplement.json 不是合法 JSON：{exc}") from exc
+
+
+def validate_supplement(payload: dict) -> list[str]:
+    errors: list[str] = []
+    if payload.get("schema_version") != 1:
+        errors.append("supplement: schema_version 必须为 1")
+    entries = payload.get("entries")
+    if not isinstance(entries, list):
+        errors.append("supplement.entries 必须是数组")
+        return errors
+    seen = set()
+    for index, item in enumerate(entries):
+        where = f"supplement.entries[{index}]"
+        mid = item.get("id") if isinstance(item, dict) else None
+        if not mid:
+            errors.append(f"{where}.id 缺失")
+            continue
+        if mid in seen:
+            errors.append(f"supplement: id 重复 {mid}")
+        seen.add(mid)
+        paper = item.get("paper") or {}
+        for key in ("title", "venue"):
+            if not paper.get(key):
+                errors.append(f"supplement.{mid}: paper.{key} 缺失")
+        results = item.get("results")
+        if not isinstance(results, list) or not results:
+            errors.append(f"supplement.{mid}: results 必须是非空数组")
+            continue
+        for result in results:
+            if result.get("metric") != "mIoU":
+                errors.append(f"supplement.{mid}: 目前只支持 mIoU 补充结果")
+            value = result.get("value")
+            if not isinstance(value, (int, float)) or not (0 < value <= 100):
+                errors.append(f"supplement.{mid}: value 必须在 (0,100] 内")
+            for key in ("dataset", "source", "locator"):
+                if not result.get(key):
+                    errors.append(f"supplement.{mid}: {key} 缺失")
+    return errors
+
+
 def build_payload(papers: dict, state: dict, candidates: list[dict]) -> dict:
     methods = papers["methods"]
     ranks, best = rank_methods(methods)
@@ -359,9 +407,20 @@ def build_payload(papers: dict, state: dict, candidates: list[dict]) -> dict:
     mv_methods = [m for m in methods if "multi_view" in (m.get("tracks") or ["ov"])]
     instance = load_instance()
     instance_errors = validate_instance(instance)
+    supplement = load_supplement()
+    supplement_errors = validate_supplement(supplement)
+    if supplement_errors:
+        print("[build] 补充数据校验失败：", file=sys.stderr)
+        for error in supplement_errors:
+            print(f"  - {error}", file=sys.stderr)
+        return 1
     if instance_errors:
         raise DataError("data/instance.json 校验失败：\n  - " + "\n  - ".join(instance_errors))
     inst_ranks, inst_best = rank_instance(instance)
+    supplement = load_supplement()
+    supplement_errors = validate_supplement(supplement)
+    if supplement_errors:
+        raise DataError("data/supplement.json 校验失败：\n  - " + "\n  - ".join(supplement_errors))
 
     pending = [c for c in candidates if c.get("status") == "pending"]
     pending.sort(key=lambda c: c.get("found_at") or "", reverse=True)
@@ -394,6 +453,10 @@ def build_payload(papers: dict, state: dict, candidates: list[dict]) -> dict:
             "ranks": mv_ranks,
             "best": mv_best,
             "counts": {"methods": len(mv_methods), "pending": len(mv_pending)},
+        },
+        "supplement": {
+            "entries": supplement.get("entries") or [],
+            "updated_at": supplement.get("updated_at"),
         },
         "instance": {
             "datasets": instance.get("datasets") or [],
@@ -489,6 +552,13 @@ def main(argv: list[str] | None = None) -> int:
     candidates = read_json(DATA / "candidates.json", []) or []
     instance = load_instance()
     instance_errors = validate_instance(instance)
+    supplement = load_supplement()
+    supplement_errors = validate_supplement(supplement)
+    if supplement_errors:
+        print("[build] 补充数据校验失败：", file=sys.stderr)
+        for error in supplement_errors:
+            print(f"  - {error}", file=sys.stderr)
+        return 1
     if instance_errors:
         print("[build] 实例数据校验失败：", file=sys.stderr)
         for error in instance_errors:

@@ -1,7 +1,7 @@
 /* 本文件由 scripts/build.py 生成，请勿手工编辑。 */
 window.OV3D_DATA = {
   "schema_version": 1,
-  "generated_at": "2026-11-27 17:25",
+  "generated_at": "2026-11-28 10:01",
   "data_updated_at": "2026-11-10",
   "last_checked": "2026-11-27 17:25",
   "next_check": "2026-11-28 09:00",
@@ -1819,8 +1819,49 @@ window.OV3D_DATA = {
     },
     "counts": {
       "methods": 7,
-      "pending": 1
+      "pending": 0
     }
+  },
+  "supplement": {
+    "entries": [
+      {
+        "id": "splatseg3d",
+        "method": "SplatSeg3D",
+        "paper": {
+          "title": "SplatSeg3D: Efficient Zero-Shot 3D Segmentation via Point Cloud Surfelization and Splatting",
+          "authors": [
+            "SplatSeg3D authors"
+          ],
+          "year": 2026,
+          "venue": "arXiv preprint 2026",
+          "venue_type": "preprint",
+          "arxiv_id": "2611.32716",
+          "url": "https://arxiv.org/abs/2611.32716",
+          "code_url": null,
+          "open_source": "unknown"
+        },
+        "results": [
+          {
+            "dataset": "Replica",
+            "classes": 51,
+            "metric": "mIoU",
+            "value": 36.2,
+            "source": "SplatSeg3D, Tab.2",
+            "locator": "Table 2"
+          },
+          {
+            "dataset": "ScanNet++",
+            "classes": 100,
+            "metric": "mIoU",
+            "value": 27.3,
+            "source": "SplatSeg3D, Tab.3",
+            "locator": "Table 3"
+          }
+        ],
+        "note": "把点云 surfel 化后渲染多视角，再用文本提示的 2D 分割回投到 3D；不需要外部图像/位姿。只报告 Replica（51 类）与 ScanNet++（top-100 类），不在三个主数据集上报告。"
+      }
+    ],
+    "updated_at": "2026-11-28"
   },
   "instance": {
     "datasets": [
@@ -2484,47 +2525,13 @@ window.OV3D_DATA = {
     "papers": 23,
     "unique_papers": 19,
     "results": 50,
-    "pending": 2,
+    "pending": 0,
     "open_vocab": 17,
     "few_label": 1,
     "fully_supervised": 4,
     "transfer_baseline": 1
   },
-  "pending": [
-    {
-      "id": "2611.32716",
-      "title": "SplatSeg3D: Efficient Zero-Shot 3D Segmentation via Point Cloud Surfelization and Splatting",
-      "arxiv_id": "2611.32716",
-      "url": "https://arxiv.org/abs/2611.32716",
-      "found_at": "2026-11-25 17:31",
-      "keywords": [
-        "open-vocab",
-        "open-vocabulary",
-        "scannet",
-        "zero-shot"
-      ],
-      "venue_hint": "",
-      "tracks": [
-        "ov",
-        "multi_view"
-      ]
-    },
-    {
-      "id": "2611.29213",
-      "title": "PartPO: Part-Level Policy Optimization for Shape-to-Program Generation",
-      "arxiv_id": "2611.29213",
-      "url": "https://arxiv.org/abs/2611.29213",
-      "found_at": "2026-11-24 18:39",
-      "keywords": [
-        "open-vocab",
-        "open-vocabulary"
-      ],
-      "venue_hint": "",
-      "tracks": [
-        "ov"
-      ]
-    }
-  ],
+  "pending": [],
   "changelog": [
     {
       "at": "2026-11-10 09:45",

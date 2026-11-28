@@ -226,6 +226,34 @@
         带「转引」标记的数值来自 OpenTrack3D 的对照表；类别集合与数据集划分以详情中的出处为准。
       </p>
     </section>
+
+    <section id="supplement" aria-labelledby="supplement-caption">
+      <div class="sectionbreak">
+        <span>补充 / 其他数据集</span>
+        <p>方法确实属于多视角 2D→3D，但只报告 Replica / ScanNet++ 等非主榜数据集；单独列出，不参与排名。</p>
+      </div>
+      <div class="caption-row">
+        <h2 id="supplement-caption">补充语义结果 · 其他数据集</h2>
+        <p>不与 ScanNet v2 / nuScenes / Matterport3D 混排</p>
+      </div>
+      <div class="tablewrap">
+        <table class="board supp-board" id="supp-board">
+          <thead>
+            <tr>
+              <th scope="col">方法</th>
+              <th scope="col" class="c-venue">发表</th>
+              <th scope="col">数据集</th>
+              <th scope="col" class="c-classes">类别数</th>
+              <th scope="col" class="c-suppmiou">mIoU</th>
+              <th scope="col">出处</th>
+              <th scope="col" class="c-code">开源</th>
+            </tr>
+          </thead>
+          <tbody id="supp-body"></tbody>
+        </table>
+        <p class="empty" id="supp-empty" hidden>暂无补充结果。</p>
+      </div>
+    </section>
   </main>
 
   <section class="scope wrap" aria-labelledby="scope-title">
@@ -316,5 +344,6 @@
   <script src="data/leaderboard.js"></script>
   <script src="assets/mv.js"></script>
   <script src="assets/instance.js"></script>
+  <script src="assets/supplement.js"></script>
 </body>
 </html>

@@ -318,6 +318,42 @@ h1 {
 .board.inst-board .c-code { width: 84px; }
 .board.inst-board .c-more { width: 36px; }
 
+/* ---------- supplement ---------- */
+
+.board.supp-board .c-venue { width: 140px; }
+.board.supp-board .c-classes { width: 84px; }
+.board.supp-board .c-suppmiou { width: 90px; }
+.board.supp-board td { vertical-align: middle; }
+.board.supp-board .supp-method { font-size: 15px; font-weight: 700; }
+.board.supp-board .supp-note { display: block; margin-top: 4px; font-size: 10px; color: var(--muted); line-height: 1.5; max-width: 60ch; }
+
+@media (max-width: 900px) {
+  .board.supp-board { display: block; width: 100%; }
+  .board.supp-board thead { display: none; }
+  .board.supp-board tbody { display: block; }
+  .board.supp-board tr.row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "method venue"
+      "dataset classes"
+      "miou source"
+      "code code";
+    column-gap: 14px;
+    row-gap: 5px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .board.supp-board tr.row td { display: block; border: 0; padding: 0; min-width: 0; width: auto; }
+  .board.supp-board .c-method { grid-area: method; }
+  .board.supp-board .c-venue { grid-area: venue; justify-self: end; }
+  .board.supp-board .c-dataset { grid-area: dataset; }
+  .board.supp-board .c-classes { grid-area: classes; justify-self: end; }
+  .board.supp-board .c-suppmiou { grid-area: miou; }
+  .board.supp-board .c-source { grid-area: source; justify-self: end; font-size: 10px; }
+  .board.supp-board .c-code { grid-area: code; }
+}
+
 /* ---------- scope ---------- */
 
 .scope {

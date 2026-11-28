@@ -26,9 +26,11 @@
     ],
     "score": 11,
     "found_at": "2026-11-25 17:31",
-    "status": "pending",
+    "status": "verified",
     "source": "arxiv",
-    "abstract_snippet": "Open-vocabulary 3D segmentation methods rely on 2D foundation models applied to registered images captured alongside the 3D point clouds. However, such images may not be available in many cases, while direct 3D point cloud segmentation methods require semantic class supervision and are challenging to deploy in a zero-s"
+    "abstract_snippet": "Open-vocabulary 3D segmentation methods rely on 2D foundation models applied to registered images captured alongside the 3D point clouds. However, such images may not be available in many cases, while direct 3D point cloud segmentation methods require semantic class supervision and are challenging to deploy in a zero-s",
+    "note": "相关：点云 surfel 渲染多视角 + 文本提示 2D 分割。只报告 Replica 36.2 / ScanNet++ 27.3，已加入「补充 / 其他数据集」区，不参与三数据集排名。",
+    "reviewed_at": "2026-11-28"
   },
   {
     "id": "2611.29213",
@@ -54,9 +56,11 @@
     ],
     "score": 8,
     "found_at": "2026-11-24 18:39",
-    "status": "pending",
+    "status": "rejected",
     "source": "arxiv",
-    "abstract_snippet": "We present PartPO, a reinforcement learning method for generating structured shape programs from 3D point clouds. Existing shape-to-program models are trained with supervised learning on procedurally generated data and generalize poorly to more diverse shapes, while reinforcement learning from execution feedback assign"
+    "abstract_snippet": "We present PartPO, a reinforcement learning method for generating structured shape programs from 3D point clouds. Existing shape-to-program models are trained with supervised learning on procedurally generated data and generalize poorly to more diverse shapes, while reinforcement learning from execution feedback assign",
+    "note": "形状到程序生成（shape-to-program）任务，不是 3D 语义/实例分割，无本榜指标。",
+    "reviewed_at": "2026-11-28"
   },
   {
     "id": "2611.24643",
